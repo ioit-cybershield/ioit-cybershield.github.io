@@ -85,29 +85,45 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // --- GSAP ANIMATION LOGIC ---
-  useGSAP(() => {
-    const isSolid = isScrolled || activeId !== null || isMobileOpen;
+  useGSAP(
+    () => {
+      const isSolid = isScrolled || activeId !== null || isMobileOpen;
 
-    gsap.to(headerRef.current, {
-      backgroundColor: isSolid ? "rgba(0, 82, 205, 1)" : "rgba(0, 82, 205, 0)",
-      backdropFilter: isSolid ? "blur(0px)" : "blur(0px)",
-      boxShadow: isSolid ? "0 4px 30px rgba(0, 0, 0, 0.05)" : "none",
-      duration: 0.4,
-      ease: "power2.out",
-    });
-  }, [isScrolled, activeId, isMobileOpen]);
+      const ctx = gsap.context(() => {
+        gsap.to(headerRef.current, {
+          backgroundColor: isSolid
+            ? "rgba(0, 82, 205, 1)"
+            : "rgba(0, 82, 205, 0)",
+          backdropFilter: isSolid ? "blur(0px)" : "blur(0px)",
+          boxShadow: isSolid ? "0 4px 30px rgba(0, 0, 0, 0.05)" : "none",
+          duration: 0.4,
+          ease: "power2.out",
+        });
+      }, headerRef);
+
+      return () => ctx.revert();
+    },
+    { dependencies: [isScrolled, activeId, isMobileOpen] }
+  );
 
   // --- OVERLAY ANIMATION ---
-  useGSAP(() => {
-    const shouldShow = activeId !== null;
-    gsap.to(overlayRef.current, {
-      opacity: shouldShow ? 1 : 0,
-      pointerEvents: shouldShow ? "auto" : "none",
-      duration: 0.3,
-      ease: "power2.inOut",
-    });
-  }, [activeId]);
+  useGSAP(
+    () => {
+      const shouldShow = activeId !== null;
+
+      const ctx = gsap.context(() => {
+        gsap.to(overlayRef.current, {
+          opacity: shouldShow ? 1 : 0,
+          pointerEvents: shouldShow ? "auto" : "none",
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+      }, overlayRef);
+
+      return () => ctx.revert();
+    },
+    { dependencies: [activeId] }
+  );
 
   // Navigation Handler for the Button
   const handleContactClick = () => {

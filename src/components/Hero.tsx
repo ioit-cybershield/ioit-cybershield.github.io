@@ -1,13 +1,10 @@
-"use client";
-
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import Lenis from "lenis";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 const CUSTOM_EASE = "cubic-bezier(0.43, 0.195, 0.02, 1)";
@@ -17,77 +14,60 @@ export default function LandingPage() {
   const bgMediaRef = useRef<HTMLDivElement>(null);
   const ctaButtonsRef = useRef<HTMLDivElement>(null);
 
-  // 1. Initialize Lenis Smooth Scroll
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-
-    lenis.on("scroll", ScrollTrigger.update);
-
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
-    };
-  }, []);
-
-  // 2. GSAP Animations
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: CUSTOM_EASE } });
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: CUSTOM_EASE } });
 
-      // Title Reveal
-      tl.to(".title-mask-inner", {
-        y: "0%",
-        duration: 1.5,
-        stagger: 0.15,
-        delay: 0.2,
-      });
-
-      // Bottom Text Reveal
-      tl.to(
-        ".bottom-text-line",
-        {
+        // Title Reveal
+        tl.to(".title-mask-inner", {
           y: "0%",
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.1,
-        },
-        "-=1.0"
-      );
-
-      // CTA Fade In
-      tl.fromTo(
-        ctaButtonsRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
-        "-=0.8"
-      );
-
-      // Parallax Effect (Will activate once you add content below this section)
-      if (bgMediaRef.current) {
-        gsap.to(bgMediaRef.current, {
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-          y: "20%",
-          scale: 1.1,
-          ease: "none",
+          duration: 1.5,
+          stagger: 0.15,
+          delay: 0.2,
         });
-      }
+
+        // Bottom Text Reveal
+        tl.to(
+          ".bottom-text-line",
+          {
+            y: "0%",
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.1,
+          },
+          "-=1.0"
+        );
+
+        // CTA Fade In
+        tl.fromTo(
+          ctaButtonsRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
+          "-=0.8"
+        );
+
+        // Parallax Effect
+        if (bgMediaRef.current) {
+          gsap.to(bgMediaRef.current, {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+            y: "20%",
+            scale: 1.1,
+            ease: "none",
+          });
+        }
+      }, containerRef);
+
+      return () => {
+        ctx.revert();
+      };
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [] }
   );
 
   return (

@@ -1,132 +1,104 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import Lenis from "lenis";
 
-// Register GSAP Plugin
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutSection = () => {
   const containerRef = useRef<HTMLElement | null>(null);
-  const lenisRef = useRef<Lenis | null>(null);
 
-  // 1. Lenis Initialization (Smooth Scroll)
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-    });
-
-    lenisRef.current = lenis;
-
-    // Sync Lenis scroll with GSAP ScrollTrigger
-    lenis.on("scroll", ScrollTrigger.update);
-
-    // GSAP Ticker for smooth animation frame updates
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
-    };
-  }, []);
-
-  // 2. GSAP Animations
   useGSAP(
     () => {
       if (!containerRef.current) return;
 
-      // A. General "Fade Up" Animation
-      const fadeElements = gsap.utils.toArray<HTMLElement>(".animate-fade-up");
-      fadeElements.forEach((el) => {
-        if (!(el instanceof HTMLElement)) return;
-        gsap.fromTo(
-          el,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      });
+      const ctx = gsap.context(() => {
+        // Fade Up Animation
+        const fadeElements =
+          gsap.utils.toArray<HTMLElement>(".animate-fade-up");
+        fadeElements.forEach((el) => {
+          gsap.fromTo(
+            el,
+            { y: 60, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 90%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        });
 
-      // B. Heavy Numbers Parallax ("19" goes up, "98" goes down)
-      // Adjusted for better responsiveness
-      const mm = gsap.matchMedia();
+        // Heavy Numbers Parallax
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 768px)", () => {
+          gsap.fromTo(
+            ".heavy-number-left",
+            { yPercent: 20 },
+            {
+              yPercent: -30,
+              ease: "none",
+              scrollTrigger: {
+                trigger: ".heavy-numbers-container",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
+            }
+          );
 
-      mm.add("(min-width: 768px)", () => {
-        gsap.fromTo(
-          ".heavy-number-left",
-          { yPercent: 20 },
-          {
-            yPercent: -30,
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".heavy-numbers-container",
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
-            },
-          }
-        );
+          gsap.fromTo(
+            ".heavy-number-right",
+            { yPercent: -20 },
+            {
+              yPercent: 30,
+              ease: "none",
+              scrollTrigger: {
+                trigger: ".heavy-numbers-container",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
+            }
+          );
+        });
 
-        gsap.fromTo(
-          ".heavy-number-right",
-          { yPercent: -20 },
-          {
-            yPercent: 30,
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".heavy-numbers-container",
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
-            },
-          }
+        // Image Parallax
+        const parallaxImages = gsap.utils.toArray<HTMLElement>(
+          ".parallax-img-wrapper"
         );
-      });
+        parallaxImages.forEach((wrapper) => {
+          const img = wrapper.querySelector<HTMLImageElement>("img");
+          if (!img) return;
+          gsap.fromTo(
+            img,
+            { yPercent: -15, scale: 1.15 },
+            {
+              yPercent: 15,
+              scale: 1.15,
+              ease: "none",
+              scrollTrigger: {
+                trigger: wrapper,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
+            }
+          );
+        });
+      }, containerRef);
 
-      // C. Image Parallax (Ukiyo style replacement)
-      const parallaxImages = gsap.utils.toArray<HTMLElement>(
-        ".parallax-img-wrapper"
-      );
-      parallaxImages.forEach((wrapper) => {
-        if (!(wrapper instanceof HTMLElement)) return;
-        const img = wrapper.querySelector<HTMLImageElement>("img");
-        if (!img) return;
-        gsap.fromTo(
-          img,
-          { yPercent: -15, scale: 1.15 },
-          {
-            yPercent: 15,
-            scale: 1.15,
-            ease: "none",
-            scrollTrigger: {
-              trigger: wrapper,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            },
-          }
-        );
-      });
+      // Cleanup function
+      return () => {
+        ctx.revert(); // This kills all animations and ScrollTriggers
+      };
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [] }
   );
 
   return (
