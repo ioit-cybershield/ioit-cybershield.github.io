@@ -8,10 +8,10 @@ import TimelineSpinner from '@/components/Timeline';
 ---
 
 <Layout>
-  <LenisProvider client:only="react">
-    <Navbar client:idle />
-    <HeroSection client:idle />
-    <AboutSection client:idle />
-    <TimelineSpinner client:idle />
+  <LenisProvider client:load>
+    <Navbar client:load/>
+    <HeroSection client:load/>
+    <AboutSection client:load />
+    <TimelineSpinner client:load />
   </LenisProvider>
 </Layout>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,53 +11,19 @@ export default function LenisProvider({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-    });
+    const lenis = new Lenis();
 
-    // Critical: Set up scroller proxy
-    ScrollTrigger.scrollerProxy(document.documentElement, {
-      scrollTop(value) {
-        return arguments.length
-          ? lenis.scrollTo(value as number, { immediate: true })
-          : lenis.scroll;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-    });
-
-    // Proper GSAP ticker integration
+    // Lenis -> ScrollTrigger sync
     lenis.on("scroll", ScrollTrigger.update);
+
+    // Drive Lenis with GSAP ticker (ONE loop)
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
 
-    // RAF loop
-    let rafId: number;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
-
-    // Refresh ScrollTrigger on resize
-    const handleResize = () => ScrollTrigger.refresh();
-    window.addEventListener("resize", handleResize);
-
     return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", handleResize);
+      gsap.ticker.remove((time) => lenis.raf(time * 1000)); // see note below
       lenis.destroy();
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };

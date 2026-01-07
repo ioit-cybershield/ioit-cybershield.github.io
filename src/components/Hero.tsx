@@ -90,6 +90,7 @@ export default function LandingPage() {
               muted
               loop
               playsInline
+              // poster=""
             />
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/40" />
