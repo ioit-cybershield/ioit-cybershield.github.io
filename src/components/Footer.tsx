@@ -1,6 +1,7 @@
 import React, { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import LogoText from "./ui/logo-text-copyright";
 
 // Register ScrollTrigger if you haven't globally
 gsap.registerPlugin(ScrollTrigger);
@@ -143,14 +144,15 @@ export default function Footer() {
 
         {/* Bottom: Massive Brand Typography */}
         <div className="relative w-full flex justify-center items-end mt-auto">
-          <h1
+          <div
             ref={bigTextRef}
             className="text-[14vw] md:text-[15.5vw] leading-[0.8] font-bold tracking-tighter text-white whitespace-nowrap select-none mix-blend-difference"
             style={{ fontFamily: "Arial, Helvetica, sans-serif" }} // Fallback to standard grotesque
           >
-            CyberShield
-            <span className="text-[4vw] align-top relative top-[2vw]">®</span>
-          </h1>
+            {/* CyberShield */}
+            <LogoText />
+            {/* <span className="text-[4vw] align-top relative top-[2vw]">®</span> */}
+          </div>
         </div>
       </div>
     </footer>

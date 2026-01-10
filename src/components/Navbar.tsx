@@ -287,7 +287,7 @@ export default function Navbar() {
                           <li key={link.label}>
                             <a
                               href={link.href}
-                              className="block text-lg font-light text-white/90 hover:text-blue-400 hover:translate-x-1 transition-all duration-200"
+                              className="block text-lg font-light text-white/90 hover:text-[#a5a5a5] hover:translate-x-1 transition-all duration-200"
                             >
                               {link.label}
                             </a>
@@ -347,7 +347,7 @@ export default function Navbar() {
 }
 
 // --- EXTRACTED LOGO COMPONENT ---
-function Logo() {
+export function Logo() {
   return (
     <>
       <svg
