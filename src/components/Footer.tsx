@@ -1,159 +1,238 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LogoText from "./ui/logo-text-copyright";
 
-// Register ScrollTrigger if you haven't globally
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer() {
   const containerRef = useRef<HTMLElement>(null);
-  const bigTextRef = useRef<HTMLHeadingElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<SVGSVGElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          scroller: document.documentElement,
-          start: "top 90%", // Start animating when footer hits bottom of viewport
-          end: "bottom center",
-          toggleActions: "play none none reverse",
+      // 1. Initial Setup
+      gsap.set(".inview-element", { y: 50, opacity: 0 });
+      gsap.set(bgRef.current, { y: -50, opacity: 0 });
+      gsap.set(logoRef.current, { y: 100, opacity: 0 });
+
+      // 2. Main Content Reveal
+      ScrollTrigger.batch(".inview-element", {
+        start: "top 85%",
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            stagger: 0.1,
+            ease: "power3.out",
+          });
         },
       });
 
-      // 1. Animate the separator line (optional, purely aesthetic addition)
-      tl.fromTo(
-        ".footer-divider",
-        { scaleX: 0, transformOrigin: "left" },
-        { scaleX: 1, duration: 1, ease: "expo.out" }
-      );
-
-      // 2. Stagger in all navigation links
-      tl.fromTo(
-        ".footer-link",
-        { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.05,
-          duration: 0.8,
-          ease: "power3.out",
+      // 3. Background Parallax/Fade
+      gsap.to(bgRef.current, {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: 1,
+          scroller: document.documentElement,
         },
-        "-=0.5"
-      );
+        y: 0,
+        opacity: 0.4,
+        ease: "none",
+      });
 
-      // 3. Massive Text Reveal (Parallax-ish slide up)
-      tl.fromTo(
-        bigTextRef.current,
-        { y: 100, opacity: 0, scale: 0.95 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 1.2,
-          ease: "power4.out",
+      // 4. Logo Reveal
+      gsap.to(logoRef.current, {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 60%",
+          scroller: document.documentElement,
         },
-        "-=0.8"
-      );
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "expo.out",
+      });
+
+      // 5. Button Hover Animations
+      const btn = document.querySelector(".content_btn");
+      if (btn) {
+        const icon = btn.querySelector(".btn_icon");
+        const label = btn.querySelector(".btn_label");
+        const arrow = btn.querySelector(".arrow-svg");
+
+        btn.addEventListener("mouseenter", () => {
+          gsap.to(icon, { scale: 1.1, duration: 0.3, ease: "back.out(1.7)" });
+          gsap.to(arrow, { x: 2, y: -2, duration: 0.3 });
+          gsap.to(label, { x: -2, duration: 0.3 });
+        });
+
+        btn.addEventListener("mouseleave", () => {
+          gsap.to(icon, { scale: 1, duration: 0.3 });
+          gsap.to(arrow, { x: 0, y: 0, duration: 0.3 });
+          gsap.to(label, { x: 0, duration: 0.3 });
+        });
+      }
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Hover animation for links using GSAP (cleaner than pure CSS transition)
-  const onEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    gsap.to(e.currentTarget, {
-      color: "#9ca3af",
-      duration: 0.3,
-      ease: "power2.out",
-    }); // gray-400
-  };
-
-  const onLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    gsap.to(e.currentTarget, {
-      color: "#ffffff",
-      duration: 0.3,
-      ease: "power2.out",
-    });
-  };
-
   return (
     <footer
       ref={containerRef}
-      className="w-full bg-black text-white pt-20 pb-10 px-6 md:px-12 overflow-hidden relative"
+      id="footer"
+      className="relative w-full h-screen bg-black text-white pt-[clamp(60px,10vh,100px)] pb-6 overflow-hidden z-0 font-sans -mt-0.5"
     >
-      {/* Optional: Top Divider if you want to separate from content above */}
-      <div className="footer-divider w-full h-[1px] bg-white/20 mb-16" />
+      <div className="block_inner relative z-10 w-full max-w-[1524px] mx-auto px-6 md:px-12 flex flex-col justify-between h-full">
+        {/* === Main Footer Content === */}
+        <div className="footer_main flex flex-col lg:flex-row justify-between w-full mb-16 lg:mb-32">
+          {/* Left: Heading & CTA */}
+          <div className="footer_content w-full lg:w-[55%] mb-16 lg:mb-0">
+            <h6 className="content_heading text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] font-medium tracking-tight mb-12 max-w-[90%] inview-element">
+              We are advancing small molecule therapeutics for age-related
+              diseases.
+            </h6>
 
-      <div
-        ref={linksRef}
-        className="max-w-[1920px] mx-auto flex flex-col justify-between h-full min-h-[50vh]"
-      >
-        {/* Top Row: Navigation */}
-        <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-0 mb-12 md:mb-0">
-          {/* Left: Main Nav */}
-          <nav className="flex flex-wrap gap-x-8 gap-y-2">
-            {["Services", "Events", "Team", "Contact"].map((item) => (
+            <div className="button inview-element inline-block">
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="footer-link text-base md:text-lg font-medium tracking-wide cursor-pointer"
-                onMouseEnter={onEnter}
-                onMouseLeave={onLeave}
+                href="/contact"
+                className="content_btn group relative inline-flex items-center text-white"
+                aria-label="Work with us"
               >
-                {item}
-              </a>
-            ))}
-          </nav>
+                {/* Button Label Part */}
+                <span className="btn_label relative bg-[#222F30] h-12 px-6 flex items-center rounded-l-full text-lg font-medium transition-colors duration-300 group-hover:bg-[#a7e26e] group-hover:text-black">
+                  Work with us
+                  {/* Corner Smoothing SVG */}
+                  <div className="label_corner absolute -right-[17px] top-0 w-[18px] h-full overflow-hidden pointer-events-none">
+                    <svg
+                      width="18"
+                      height="48"
+                      viewBox="0 0 18 48"
+                      fill="none"
+                      className="text-[#222F30] transition-colors duration-300 group-hover:text-[#a7e26e]"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M0 0h5.63c7.808 0 13.536 7.337 11.642 14.91l-6.09 24.359A11.527 11.527 0 0 1 0 48V0Z"
+                      />
+                    </svg>
+                  </div>
+                </span>
 
-          {/* Right: Legal */}
-          <nav className="flex flex-wrap gap-x-8 gap-y-2">
-            {["Imprint", "Data", "Accessibility"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="footer-link text-base md:text-lg font-medium tracking-wide cursor-pointer"
-                onMouseEnter={onEnter}
-                onMouseLeave={onLeave}
-              >
-                {item}
+                {/* Button Icon Part */}
+                <i className="btn_icon relative w-12 h-12 flex items-center justify-center rounded-full bg-[#344041] ml-[-4px] z-10 transition-colors duration-300 group-hover:bg-[#d4ff9e] group-hover:text-black">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    className="arrow-svg relative z-20"
+                  >
+                    <path
+                      d="M1 13L13 1M13 1H5M13 1V9"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </i>
               </a>
-            ))}
-          </nav>
-        </div>
+            </div>
+          </div>
 
-        {/* Middle Row: Socials & Credit */}
-        <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-0 mt-8 mb-20 md:mb-32">
-          {/* Left: Socials */}
-          <nav className="flex flex-wrap gap-x-8 gap-y-2">
-            {["LinkedIn", "TikTok", "Instagram"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="footer-link text-base md:text-lg font-medium tracking-wide cursor-pointer"
-                onMouseEnter={onEnter}
-                onMouseLeave={onLeave}
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
-        </div>
+          {/* Right: Info Columns */}
+          <div className="footer_info w-full lg:w-[40%] flex flex-wrap lg:justify-end gap-10 lg:gap-24 relative">
+            {/* Nav Column 1 */}
+            <div className="info_col flex flex-col gap-6">
+              <div className="col_label text-[#c9cbbe] font-mono text-xs uppercase tracking-wider inview-element">
+                Navigate
+              </div>
+              <ul className="col_menu flex flex-col gap-2">
+                {[
+                  { label: "Platform", href: "/platform" },
+                  { label: "Company", href: "/company" },
+                  { label: "Newsroom", href: "/newsroom" },
+                  { label: "Work with us", href: "/contact" },
+                ].map((item, i) => (
+                  <li key={i} className="menu_item inview-element">
+                    <a
+                      href={item.href}
+                      className="menu_link text-lg md:text-xl font-normal text-white hover:text-[#a7e26e] transition-colors duration-200 inline-block"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        {/* Bottom: Massive Brand Typography */}
-        <div className="relative w-full flex justify-center items-end mt-auto">
-          <div
-            ref={bigTextRef}
-            className="text-[14vw] md:text-[15.5vw] leading-[0.8] font-bold tracking-tighter text-white whitespace-nowrap select-none mix-blend-difference"
-            style={{ fontFamily: "Arial, Helvetica, sans-serif" }} // Fallback to standard grotesque
-          >
-            {/* CyberShield */}
-            <LogoText />
-            {/* <span className="text-[4vw] align-top relative top-[2vw]">®</span> */}
+            {/* Nav Column 2 */}
+            <div className="info_col flex flex-col gap-6">
+              <div className="col_label text-[#c9cbbe] font-mono text-xs uppercase tracking-wider inview-element">
+                Connect
+              </div>
+              <ul className="col_menu flex flex-col gap-2">
+                {[
+                  {
+                    label: "LinkedIn",
+                    href: "https://www.linkedin.com/company/104962109/",
+                  },
+                  { label: "Instagram", href: "https://x.com" },
+                ].map((item, i) => (
+                  <li key={i} className="menu_item inview-element">
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="menu_link text-lg md:text-xl font-normal text-white hover:text-[#a7e26e] transition-colors duration-200 inline-block"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
+
+        {/* === Footer Bottom === */}
+        <div className="footer_bottom flex flex-col-reverse md:flex-row justify-between items-end md:items-center w-full mt-auto pt-8 border-t border-white/10 text-[#777] text-xs font-mono tracking-wide">
+          <div className="footer_links flex gap-4">
+            {/* Placeholder for privacy links if needed in future */}
+          </div>
+          <div className="footer_copyright">
+            © 2026 CyberShield. All rights reserved.
+          </div>
+        </div>
+
+        {/* === Giant Logo === */}
+        <div className="footer_logo w-full mt-12 mb-4 relative">
+          <a
+            href="/"
+            aria-label="Home"
+            className="block w-full text-white hover:opacity-80 transition-opacity duration-500"
+          >
+            <LogoText />
+          </a>
+        </div>
+      </div>
+
+      {/* === Ambient Background === */}
+      <div
+        ref={bgRef}
+        className="footer_background absolute inset-0 pointer-events-none z-0 opacity-40 mix-blend-screen"
+        aria-hidden="true"
+      >
+        {/* Abstract Gradient Mesh to simulate the WebGL effect */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#1a2323] via-[#0b1212] to-black"></div>
+        <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-[#1a2323] rounded-full blur-[120px] opacity-60 animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#0d2121] rounded-full blur-[100px] opacity-50"></div>
       </div>
     </footer>
   );
