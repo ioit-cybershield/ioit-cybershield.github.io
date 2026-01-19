@@ -52,6 +52,8 @@ export default function TimelineSpinnerSection() {
           scrub: 0.5, // 0.5s smoothing (tighter than 1s to feel lockstep)
           pin: true,
           pinSpacing: true, // Needed to push subsequent content down
+          anticipatePin: 1,
+          scroller: document.documentElement,
           invalidateOnRefresh: true,
           // markers: true, // Uncomment to debug start/end lines
         },
@@ -69,7 +71,7 @@ export default function TimelineSpinnerSection() {
           transformOrigin: "50% 50%",
           ease: "none",
         },
-        0
+        0,
       );
 
       // --- STAGE 1: PAST (0 - 0.25) ---
@@ -77,7 +79,7 @@ export default function TimelineSpinnerSection() {
       tl.to(
         textRefs.current[0],
         { opacity: 0, y: -40, duration: 0.1, ease: "power1.in" },
-        0.2
+        0.2,
       );
 
       // --- STAGE 2: TODAY (0.25 - 0.55) ---
@@ -86,13 +88,13 @@ export default function TimelineSpinnerSection() {
         textRefs.current[1],
         { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 0.1, ease: "power1.out" },
-        0.25
+        0.25,
       );
       // Fade Out
       tl.to(
         textRefs.current[1],
         { opacity: 0, y: -40, duration: 0.1, ease: "power1.in" },
-        0.5
+        0.5,
       );
 
       // --- STAGE 3: FUTURE (0.55 - 0.85) ---
@@ -101,13 +103,13 @@ export default function TimelineSpinnerSection() {
         textRefs.current[2],
         { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 0.1, ease: "power1.out" },
-        0.55
+        0.55,
       );
       // Fade Out
       tl.to(
         textRefs.current[2],
         { opacity: 0, y: -40, duration: 0.1, ease: "power1.in" },
-        0.8
+        0.8,
       );
 
       // --- FINAL REVEAL (0.85 - 1.0) ---
@@ -115,7 +117,7 @@ export default function TimelineSpinnerSection() {
       tl.to(
         spinnerRef.current,
         { opacity: 0.1, duration: 0.1, ease: "power1.out" },
-        0.85
+        0.85,
       );
 
       // Brown Pane wipes up
@@ -123,11 +125,11 @@ export default function TimelineSpinnerSection() {
         paneRef.current,
         { clipPath: "circle(0% at 50% 100%)" },
         {
-          clipPath: "circle(150% at 50% 100%)",
+          clipPath: "circle(200% at 50% 100%)",
           duration: 0.2,
           ease: "power2.inOut",
         },
-        0.85
+        0.85,
       );
 
       // Final Text fades up
@@ -135,7 +137,7 @@ export default function TimelineSpinnerSection() {
         paneContentRef.current,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.1, ease: "power1.out" },
-        0.92
+        0.92,
       );
     }, section);
 
@@ -148,7 +150,12 @@ export default function TimelineSpinnerSection() {
       // CHANGE: Removed h-[500vh]. The ScrollTrigger 'end' handles the distance.
       // CHANGE: Added h-screen to make the section fill the viewport while pinned.
       // CHANGE: Added 'relative z-10' to ensure proper stacking over white body background.
-      className="relative z-10 h-screen w-full bg-[#e5ded6] text-[#241e1e] overflow-hidden"
+      className="relative z-10 min-h-screen w-full bg-[#e5ded6] text-[#241e1e] overflow-hidden transform-gpu will-change-transform"
+      // style={{
+      //   transform: "translateZ(0)",
+      //   backfaceVisibility: "hidden",
+      //   WebkitBackfaceVisibility: "hidden",
+      //
     >
       {/* Background Layer: 
           Kept absolute to ensure it fills the pin-spacer area if GSAP applies one. 
@@ -228,7 +235,7 @@ export default function TimelineSpinnerSection() {
       {/* Final Reveal Pane */}
       <div
         ref={paneRef}
-        className="pointer-events-auto absolute inset-0 z-20 bg-[#2e2522] text-[#e5ded6]"
+        className="pointer-events-auto absolute inset-0 z-20 bg-[#2e2522] text-[#e5ded6] pb-0.5"
         style={{
           clipPath: "circle(0% at 50% 100%)",
         }}
@@ -245,7 +252,7 @@ export default function TimelineSpinnerSection() {
               </span>
             </div>
 
-            <button className="group inline-flex items-center gap-3 border border-[#e5ded6] px-7 py-3 text-sm uppercase tracking-[0.18em] text-[#e5ded6] transition-colors duration-300 hover:bg-[#e5ded6] hover:text-[#2e2522]">
+            <button className="group inline-flex items-center gap-3 px-7 py-3 text-sm uppercase tracking-[0.18em] text-[#e5ded6] transition-colors duration-300 hover:bg-[#e5ded6] hover:text-[#2e2522]">
               <span>Request demo</span>
               <span className="translate-y-[1px] transition-transform duration-300 group-hover:translate-x-1">
                 →
