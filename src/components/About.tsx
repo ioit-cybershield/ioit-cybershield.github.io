@@ -32,7 +32,7 @@ const AboutSection = () => {
                 start: "top 85%",
                 toggleActions: "play none none reverse",
               },
-            }
+            },
           );
         });
 
@@ -52,7 +52,7 @@ const AboutSection = () => {
                 end: "bottom top",
                 scrub: 1,
               },
-            }
+            },
           );
 
           gsap.fromTo(
@@ -68,13 +68,13 @@ const AboutSection = () => {
                 end: "bottom top",
                 scrub: 1,
               },
-            }
+            },
           );
         });
 
         // 3. Flat Editorial Parallax (Preserved)
         const parallaxImages = gsap.utils.toArray<HTMLElement>(
-          ".parallax-img-wrapper"
+          ".parallax-img-wrapper",
         );
         parallaxImages.forEach((wrapper) => {
           const img = wrapper.querySelector<HTMLImageElement>("img");
@@ -93,20 +93,20 @@ const AboutSection = () => {
                 end: "bottom top",
                 scrub: true,
               },
-            }
+            },
           );
         });
       }, containerRef);
 
       return () => ctx.revert();
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full bg-white text-[#151313] antialiased overflow-hidden selection:bg-black selection:text-white"
+      className="relative w-full bg-white text-[#151313] antialiased overflow-hidden selection:bg-black selection:text-white -mt-0.5"
       style={{ fontFamily: "Haffer VF, Arial, sans-serif" }}
     >
       {/* --- OSMO REPLICA SECTION --- */}
@@ -150,8 +150,8 @@ const AboutSection = () => {
             {/* Main Headline */}
             <div className="mb-20 md:mb-32">
               <h3 className="animate-fade-up text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] leading-[0.95] tracking-tight font-medium max-w-5xl">
-                Level up your game and join a community of creatives who love
-                building great websites as much as you do.
+                Empowering cybersecurity enthusiasts to protect, defend, and
+                lead in the digital world.
               </h3>
             </div>
 
@@ -159,16 +159,16 @@ const AboutSection = () => {
             <div className="w-full flex flex-col">
               {[
                 {
-                  title: "Build faster and better",
-                  text: "Our resources save you hours of rebuilding from scratch. Each one is made for real-world projects, so you can focus on shipping work that stands out.",
+                  title: "Enhance cybersecurity skills",
+                  text: "Learn by doing through hands-on workshops, labs, and CTF-style challenges that build practical skills in ethical hacking, network security, and threat mitigation.",
                 },
                 {
-                  title: "Speed up your process",
-                  text: "These aren't stripped-down templates. Every resource is built to be fast, flexible, and production-ready, so you can ship beautiful work without trading quality for time.",
+                  title: "Promote a security-first mindset",
+                  text: "Stay ahead of emerging threats with talks, demos, and discussions on the latest attacks, defenses, and ethical guidelines in cybersecurity.",
                 },
                 {
-                  title: "A living and growing system",
-                  text: "We keep adding new resources, ideas, and techniques every week. The Vault evolves with you and your needs, so your toolkit never stops expanding.",
+                  title: "Foster collaboration and leadership",
+                  text: "Join a supportive community where members share knowledge, work on real-world projects, and connect with experts to solve genuine security challenges.",
                 },
               ].map((item, index) => (
                 <div

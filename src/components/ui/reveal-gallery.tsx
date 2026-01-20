@@ -103,7 +103,7 @@ export default function RevealGallery({ items }: Props) {
       gsap.fromTo(
         backdrop,
         { opacity: 0 },
-        { opacity: 1, duration: 0.6, ease: "power2.out" }
+        { opacity: 1, duration: 0.6, ease: "power2.out" },
       );
       const tl = gsap.timeline({ onComplete: () => setIsAnimating(false) });
       tl.to(modal, {
@@ -119,7 +119,7 @@ export default function RevealGallery({ items }: Props) {
           textRef.current.children,
           { y: 40, opacity: 0 },
           { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "power2.out" },
-          "-=0.4"
+          "-=0.4",
         );
       }
     });
@@ -140,10 +140,11 @@ export default function RevealGallery({ items }: Props) {
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 ">
           <div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-2">
-              Selected Work
+              Workshops & Events
             </h2>
             <p className="text-zinc-500 max-w-md text-lg">
-              A collection of digital experiences crafted with precision.
+              Practical cybersecurity experiences built by and for students,
+              including Workshops, Awareness Sessions, CTFs and Competitions.
             </p>
           </div>
         </div>
@@ -255,7 +256,7 @@ export default function RevealGallery({ items }: Props) {
               .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
             `}</style>
           </div>,
-          document.body
+          document.body,
         )}
     </section>
   );

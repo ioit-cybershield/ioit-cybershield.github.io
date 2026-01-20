@@ -88,14 +88,14 @@ export default function Footer() {
       id="footer"
       className="relative w-full h-screen bg-black text-white pt-[clamp(60px,10vh,100px)] pb-6 overflow-hidden z-0 font-sans -mt-0.5"
     >
-      <div className="block_inner relative z-10 w-full max-w-[1524px] mx-auto px-6 md:px-12 flex flex-col justify-between h-full">
+      <div className="block_inner relative z-10 w-full max-w-381 mx-auto px-6 md:px-12 flex flex-col justify-between h-full">
         {/* === Main Footer Content === */}
         <div className="footer_main flex flex-col lg:flex-row justify-between w-full mb-16 lg:mb-32">
           {/* Left: Heading & CTA */}
           <div className="footer_content w-full lg:w-[55%] mb-16 lg:mb-0">
-            <h6 className="content_heading text-[clamp(2rem,4vw,3.5rem)] leading-[1.1] font-medium tracking-tight mb-12 max-w-[90%] inview-element">
-              We are advancing small molecule therapeutics for age-related
-              diseases.
+            <h6 className="content_heading text-[clamp(1.4rem,3vw,2.4rem)] leading-[1.2] font-medium tracking-tight mb-12 max-w-[90%] inview-element">
+              Empowering students to secure the digital world through hands-on
+              cybersecurity learning and collaboration.
             </h6>
 
             <div className="button inview-element inline-block">
@@ -108,7 +108,7 @@ export default function Footer() {
                 <span className="btn_label relative bg-[#222F30] h-12 px-6 flex items-center rounded-l-full text-lg font-medium transition-colors duration-300 group-hover:bg-[#a7e26e] group-hover:text-black">
                   Work with us
                   {/* Corner Smoothing SVG */}
-                  <div className="label_corner absolute -right-[17px] top-0 w-[18px] h-full overflow-hidden pointer-events-none">
+                  <div className="label_corner absolute -right-4.25 top-0 w-4.5 h-full overflow-hidden pointer-events-none">
                     <svg
                       width="18"
                       height="48"
@@ -125,7 +125,7 @@ export default function Footer() {
                 </span>
 
                 {/* Button Icon Part */}
-                <i className="btn_icon relative w-12 h-12 flex items-center justify-center rounded-full bg-[#344041] ml-[-4px] z-10 transition-colors duration-300 group-hover:bg-[#d4ff9e] group-hover:text-black">
+                <i className="btn_icon relative w-12 h-12 flex items-center justify-center rounded-full bg-[#344041] -ml-1 z-10 transition-colors duration-300 group-hover:bg-[#d4ff9e] group-hover:text-black">
                   <svg
                     width="14"
                     height="14"
@@ -155,10 +155,10 @@ export default function Footer() {
               </div>
               <ul className="col_menu flex flex-col gap-2">
                 {[
-                  { label: "Platform", href: "/platform" },
-                  { label: "Company", href: "/company" },
-                  { label: "Newsroom", href: "/newsroom" },
-                  { label: "Work with us", href: "/contact" },
+                  { label: "About CyberShield", href: "#about" },
+                  { label: "Workshops & Events", href: "#events" },
+                  { label: "Resources", href: "#resources" },
+                  { label: "Join the Club", href: "#contact" },
                 ].map((item, i) => (
                   <li key={i} className="menu_item inview-element">
                     <a
@@ -230,9 +230,9 @@ export default function Footer() {
         aria-hidden="true"
       >
         {/* Abstract Gradient Mesh to simulate the WebGL effect */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#1a2323] via-[#0b1212] to-black"></div>
-        <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-[#1a2323] rounded-full blur-[120px] opacity-60 animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#0d2121] rounded-full blur-[100px] opacity-50"></div>
+        <div className="absolute inset-0 bg-linear-to-tr from-[#1a2323] via-[#0b1212] to-black"></div>
+        <div className="absolute top-1/2 left-1/4 w-150 h-150 bg-[#1a2323] rounded-full blur-[120px] opacity-60 animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-[#0d2121] rounded-full blur-[100px] opacity-50"></div>
       </div>
     </footer>
   );
