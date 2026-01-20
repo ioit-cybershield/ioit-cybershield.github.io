@@ -36,7 +36,7 @@ export default function LandingPage() {
             duration: 1.2,
             stagger: 0.1,
           },
-          "-=1.0"
+          "-=1.0",
         );
 
         // CTA Fade In
@@ -44,7 +44,7 @@ export default function LandingPage() {
           ctaButtonsRef.current,
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
-          "-=0.8"
+          "-=0.8",
         );
 
         // Parallax Effect
@@ -68,7 +68,7 @@ export default function LandingPage() {
         ctx.revert();
       };
     },
-    { scope: containerRef, dependencies: [] }
+    { scope: containerRef, dependencies: [] },
   );
 
   return (
@@ -121,15 +121,15 @@ export default function LandingPage() {
 
         {/* Bottom Area */}
         <div className="relative z-10 flex w-full flex-col items-end justify-between gap-6 px-6 pb-8 md:flex-row md:gap-10 md:px-12 md:pb-12">
-          <div className="hidden max-w-sm text-lg font-bold leading-[0.9] tracking-tighter uppercase md:block md:text-xl lg:text-2xl">
+          <div className="hidden max-w-2xl text-lg font-bold leading-[0.9] tracking-tighter uppercase md:block md:text-xl lg:text-2xl">
             <div className="overflow-hidden">
               <div className="bottom-text-line translate-y-full opacity-0">
-                FEARLESSLY FUELING
+                EMPOWERING A COMMUNITY
               </div>
             </div>
             <div className="overflow-hidden">
               <div className="bottom-text-line translate-y-full opacity-0">
-                THE FUTURE
+                WHERE STUDENTS CONNECT, LEARN & LEAD
               </div>
             </div>
           </div>
@@ -138,8 +138,8 @@ export default function LandingPage() {
             ref={ctaButtonsRef}
             className="flex w-full flex-col gap-4 md:w-auto md:flex-row"
           >
-            <CTAButton text="U.S. Power Gap" href="#gap" />
-            <CTAButton text="Power your project now" href="#contact" />
+            <CTAButton text="Join CyberShield" href="#contact" />
+            <CTAButton text="View upcoming events" href="#events" />
           </div>
         </div>
       </section>

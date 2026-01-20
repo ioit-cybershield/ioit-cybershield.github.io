@@ -150,7 +150,7 @@ export default function TimelineSpinnerSection() {
       // CHANGE: Removed h-[500vh]. The ScrollTrigger 'end' handles the distance.
       // CHANGE: Added h-screen to make the section fill the viewport while pinned.
       // CHANGE: Added 'relative z-10' to ensure proper stacking over white body background.
-      className="relative z-10 min-h-screen w-full bg-[#e5ded6] text-[#241e1e] overflow-hidden transform-gpu will-change-transform"
+      className="relative z-10 min-h-screen w-full bg-[#e5ded6] text-[#241e1e] overflow-hidden transform-gpu will-change-transform -mt-0.5"
       // style={{
       //   transform: "translateZ(0)",
       //   backfaceVisibility: "hidden",
@@ -186,7 +186,7 @@ export default function TimelineSpinnerSection() {
                 {state.label}
               </span>
 
-              <div className="mb-5 text-balance font-[var(--font-family-alternate)] text-3xl leading-[1.05] md:text-5xl lg:text-[3.4rem]">
+              <div className="mb-5 text-balance font-(--font-family-alternate) text-3xl leading-[1.05] md:text-5xl lg:text-[3.4rem]">
                 {state.titleLines.map((line) => (
                   <p key={line} className="block">
                     {line}
@@ -213,7 +213,7 @@ export default function TimelineSpinnerSection() {
 
         {/* Spinner SVG */}
         <div className="pointer-events-none absolute top-150 md:top-50 flex w-full justify-center overflow-hidden">
-          <div className="relative w-[140vw] max-w-[72rem] translate-y-[10%] md:w-[115vw] lg:w-[100vw]">
+          <div className="relative w-[140vw] max-w-6xl translate-y-[10%] md:w-[115vw] lg:w-screen">
             <svg
               ref={spinnerRef}
               viewBox="0 0 1682 1681"
@@ -245,16 +245,17 @@ export default function TimelineSpinnerSection() {
           className="flex h-full items-center justify-center px-6"
         >
           <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-10 text-balance font-[var(--font-family-alternate)] text-3xl leading-[1.1] md:text-5xl lg:text-[3.2rem]">
+            <div className="mb-10 text-balance font-(--font-family-alternate) text-3xl leading-[1.1] md:text-5xl lg:text-[3.2rem]">
               <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae a
-                sequi impedit quas, optio iste facilis et nulla.
+                Ready to step into the world of cybersecurity? Join CyberShield
+                and start learning by doing with our workshops, CTFs, and
+                projects.
               </span>
             </div>
 
             <button className="group inline-flex items-center gap-3 px-7 py-3 text-sm uppercase tracking-[0.18em] text-[#e5ded6] transition-colors duration-300 hover:bg-[#e5ded6] hover:text-[#2e2522]">
-              <span>Request demo</span>
-              <span className="translate-y-[1px] transition-transform duration-300 group-hover:translate-x-1">
+              <span>Join CyberShield</span>
+              <span className="translate-y-px transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </button>
