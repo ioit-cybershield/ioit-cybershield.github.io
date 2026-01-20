@@ -94,7 +94,7 @@ export default function LandingPage() {
             />
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 h-[40%] bg-gradient-to-b from-black/30 via-transparent to-transparent" />
+            <div className="absolute inset-0 h-[40%] bg-linear-to-b from-black/30 via-transparent to-transparent" />
           </div>
         </div>
 
