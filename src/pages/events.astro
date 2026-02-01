@@ -1,0 +1,17 @@
+---
+import Navbar from '@/components/general/Navbar';
+import Layout from '../layouts/Layout.astro';
+import LenisProvider from '@/providers/lenis-provider';
+import Footer from "@/components/general/Footer"
+import EventsList from '@/components/events/EventList';
+---
+
+<Layout>
+  <LenisProvider client:load>
+    <Navbar client:idle={{timeout:200}}/>
+    <main class="min-h-screen bg-[#f8f8f6]">
+      <EventsList client:visible={{rootMargin: "100px"}} />
+    </main>
+    <Footer client:visible={{rootMargin: "100px"}} />
+  </LenisProvider>
+</Layout>

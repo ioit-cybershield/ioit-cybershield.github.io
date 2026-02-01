@@ -191,7 +191,14 @@ export default function Preloader() {
     <div
       ref={containerRef}
       className="fixed inset-0 z-9999 bg-[#0c0c0c] text-white overflow-hidden"
-      style={{ visibility: "hidden" }} // Prevent FOUC
+      // FIX: Changed from visibility: "hidden" to visible, added critical inline background
+      style={{
+        backgroundColor: "#0c0c0c", // Critical: ensures black bg loads immediately without waiting for Tailwind
+        visibility: "visible", // Start visible to block content immediately
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+      }}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <div ref={logoWrapperRef} className="w-48 h-48 md:w-72 md:h-72">
