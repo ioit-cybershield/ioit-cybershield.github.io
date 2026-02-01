@@ -17,6 +17,49 @@ import "@/styles/global.css";
   />
 		<meta name="generator" content={Astro.generator} />
 		<title>CyberShield</title>
+				<style is:inline>
+			/* Hide content initially while preloader covers the screen */
+			html.loading body {
+				overflow: hidden;
+			}
+			#main-content {
+				opacity: 0;
+				transition: opacity 0.6s ease;
+			}
+			html.loaded #main-content {
+				opacity: 1;
+			}
+			
+			/* Ensure preloader is always on top */
+			#preloader-root {
+				position: fixed;
+				inset: 0;
+				z-index: 9999;
+				background: #0c0c0c;
+			}
+		</style>
+		
+		<!-- Block rendering until we know the preloader state -->
+		<script is:inline>
+			// Set loading state immediately
+			document.documentElement.classList.add('loading');
+			
+			// Handle preloader completion
+			window.addEventListener('preloader-complete', () => {
+				document.documentElement.classList.remove('loading');
+				document.documentElement.classList.add('loaded');
+				// Re-enable scrolling
+				document.body.style.overflow = '';
+			}, { once: true });
+			
+			// Fallback: if preloader takes too long (>4s), show content anyway
+			setTimeout(() => {
+				if (document.documentElement.classList.contains('loading')) {
+					document.documentElement.classList.remove('loading');
+					document.documentElement.classList.add('loaded');
+				}
+			}, 4000);
+		</script>
 	</head>
 	<body>
 		<slot />

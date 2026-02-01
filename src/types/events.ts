@@ -1,11 +1,16 @@
+// types/events.ts
 export type EventItem = {
   id: string;
-  date: string; // ISO YYYY-MM-DD
+  layout: "hero" | "card";
   title: string;
-  time?: string;
-  summary: string;
-  description?: string;
-  images?: string[]; // Changed from single image to array
-  link?: string;
-  location?: string;
+  slug: string;
+  date: string; // Format: DD.MM.YYYY
+  category?: string;
+  excerpt?: string;
+  contributors?: string;
+  image?: {
+    url: string;
+    alt: string;
+    aspectRatio?: "landscape" | "portrait";
+  };
 };
