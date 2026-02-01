@@ -1,126 +1,116 @@
+// src/components/events/Hero.tsx
 import React, { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { ArrowDown } from "lucide-react";
 
-// Register plugins once
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const container = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
-  // Exact text split from your design
-  const copy = [
-    ["A", "good", "cocktail", "of"],
-    ["strategists,", "designers,"],
-    ["and", "engineers."],
-  ];
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      // Split text animation
+      const words = gsap.utils.toArray(".hero-word");
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline();
-      const words = gsap.utils.toArray(".word-inner"); // Target the inner spans
-
-      // --------------------------------------------------------
-      // 1. INTRO ANIMATION (Load)
-      // --------------------------------------------------------
-      tl.fromTo(
+      gsap.fromTo(
         words,
+        { y: 100, opacity: 0, rotateX: -90 },
         {
-          yPercent: 100, // Push text down (hidden by overflow)
-          rotate: 3, // Subtle rotation for editorial feel
-          opacity: 0,
-        },
-        {
-          yPercent: 0,
-          rotate: 0,
+          y: 0,
           opacity: 1,
-          stagger: 0.05, // Fast, rhythmic stagger
+          rotateX: 0,
+          stagger: 0.1,
           duration: 1.2,
-          ease: "power3.out", // Smooth, non-bouncy deceleration
-          delay: 0.1,
+          ease: "power3.out",
+          delay: 0.5,
         },
-      ).fromTo(
-        imageRef.current,
-        { scale: 1.1, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.5, ease: "power2.out" },
-        "<0.2", // Overlap slightly with text
       );
 
-      // --------------------------------------------------------
-      // 2. SCROLL ANIMATION (Parallax & Fade)
-      // --------------------------------------------------------
-
-      // Parallax Image Effect
+      // Image parallax
       gsap.to(imageRef.current, {
-        yPercent: 20, // Move image down slightly while scrolling
+        yPercent: 20,
         ease: "none",
         scrollTrigger: {
-          trigger: triggerRef.current,
+          trigger: container.current,
           start: "top top",
           end: "bottom top",
           scrub: true,
-          scroller: document.documentElement,
         },
       });
 
-      // Text Exit Effect (Move up and Fade)
+      // Text fade out on scroll
       gsap.to(textRef.current, {
-        y: -100, // Move text upward
-        opacity: 0, // Fade out
-        ease: "power1.in",
+        opacity: 0,
+        y: -50,
         scrollTrigger: {
-          trigger: triggerRef.current,
+          trigger: container.current,
           start: "top top",
-          end: "40% top", // Finish fading before section is halfway done
+          end: "30% top",
           scrub: true,
-          scroller: document.documentElement,
         },
       });
-    },
-    { scope: container },
-  );
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div ref={container} className="bg-white">
-      <section
-        ref={triggerRef}
-        className="relative min-h-[60vh] flex flex-col pt-32 md:pt-48 overflow-hidden"
+    <div
+      ref={container}
+      className="relative h-[70vh] min-h-[600px] w-full overflow-hidden bg-zinc-900"
+    >
+      {/* Background Image with Overlay */}
+      <div
+        ref={imageRef}
+        className="absolute inset-0 w-full h-[120%] -top-[10%]"
       >
-        {/* TEXT CONTAINER */}
-        <div
-          ref={textRef}
-          className="container mx-auto px-6 md:px-12 z-10 mb-16 relative"
-        >
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[1.1]">
-            {copy.map((line, i) => (
-              <div key={i} className="block overflow-hidden">
-                {/* 'overflow-hidden' on the line wrapper creates the mask effect */}
-                {line.map((word, j) => (
-                  <span key={j} className="inline-block relative mr-3 md:mr-5">
-                    <span className="word-inner inline-block will-change-transform">
-                      {word}
-                    </span>
-                  </span>
-                ))}
-              </div>
-            ))}
-          </h1>
+        <img
+          src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=2400"
+          alt="Events background"
+          className="w-full h-full object-cover opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/50 via-zinc-900/20 to-[#F1EFE5]" />
+      </div>
+
+      {/* Content */}
+      <div
+        ref={textRef}
+        className="relative h-full flex flex-col items-center justify-center px-6 text-center"
+      >
+        <div className="overflow-hidden mb-4">
+          <span className="hero-word inline-block text-lime-300 text-sm font-bold uppercase tracking-[0.4em]">
+            CyberShield Presents
+          </span>
         </div>
 
-        {/* IMAGE BANNER */}
-        <div className="w-full h-[60vh] md:h-[85vh] relative overflow-hidden mt-auto">
-          <img
-            ref={imageRef}
-            src="https://cdn.prod.website-files.com/679cb8f2875d404c7de22f8a/685938fdf2906528f616f394_Atlantiser_about_us_hero_a2.jpg"
-            alt="Team working in office"
-            className="absolute top-[-10%] left-0 w-full h-[120%] object-cover object-center"
-          />
+        <h1 className="text-5xl md:text-7xl lg:text-9xl font-bold text-white font-['Syne'] leading-[0.9] tracking-tight max-w-6xl">
+          <div className="overflow-hidden">
+            <span className="hero-word inline-block">Calendar</span>
+          </div>
+          <div className="overflow-hidden">
+            <span className="hero-word inline-block text-transparent bg-clip-text bg-gradient-to-r from-lime-300 to-white">
+              2026
+            </span>
+          </div>
+        </h1>
+
+        <div className="overflow-hidden mt-8">
+          <div className="hero-word flex flex-col items-center gap-2 text-white/60 animate-bounce">
+            <span className="text-xs uppercase tracking-widest">
+              Scroll to explore
+            </span>
+            <ArrowDown size={20} />
+          </div>
         </div>
-      </section>
+      </div>
+
+      {/* Decorative Elements */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#F1EFE5] to-transparent" />
     </div>
   );
 };
