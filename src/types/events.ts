@@ -1,4 +1,3 @@
-// types.ts
 export type EventItem = {
   id: string;
   date: string; // ISO YYYY-MM-DD
@@ -6,7 +5,7 @@ export type EventItem = {
   time?: string;
   summary: string;
   description?: string;
-  image?: string;
+  images?: string[]; // Changed from single image to array
   link?: string;
   location?: string;
 };
