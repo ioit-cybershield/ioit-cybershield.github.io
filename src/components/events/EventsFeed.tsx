@@ -68,7 +68,7 @@ export default function EventsFeed({
       className="w-full bg-[#f5f5f3] antialiased"
       style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif" }}
     >
-      <div className="max-w-[1320px] mx-auto px-5 md:px-10 lg:px-12 pt-16 md:pt-20 pb-16">
+      <div className="max-w-screen mx-auto px-5 md:px-10 lg:px-12 pt-16 md:pt-20 pb-16">
         {items.map((item, index) =>
           item.layout === "hero" ? (
             <EventHero key={item.id} item={item} />

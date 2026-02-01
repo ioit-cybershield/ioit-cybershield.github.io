@@ -5,6 +5,7 @@ import LenisProvider from "@/providers/lenis-provider";
 import Navbar from "@/components/general/Navbar";
 import Footer from "@/components/general/Footer";
 import EventsFeed from "@/components/events/EventsFeed";
+import Hero from "@/components/events/Hero";
 
 import {MOCK_EVENTS} from "@/mock/events-data"
 ---
@@ -14,6 +15,7 @@ import {MOCK_EVENTS} from "@/mock/events-data"
     <Navbar client:idle={{ timeout: 200 }} />
     
     <main class="min-h-screen">
+        <Hero client:load />
       <EventsFeed items={MOCK_EVENTS} client:visible={{ rootMargin: "100px" }} />
     </main>
 
