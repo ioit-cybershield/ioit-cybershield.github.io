@@ -1,6 +1,6 @@
 // src/mock/event-detail-data.ts
 
-import type { EventDetail } from "../types/event-detail";
+import type { EventDetail } from "@/types/events";
 
 const LA_SOCIETE_AUTOMATIQUE: EventDetail = {
   slug: "la-societe-automatique",
@@ -58,7 +58,7 @@ const LA_SOCIETE_AUTOMATIQUE: EventDetail = {
       id: "statement",
       paragraphs: [
         "“Have we not always had the deep-seated phantasy of a world that would go on without us? The poetic temptation to see the world in our absence, free of any human, all-too-human will?”",
-        "— Jean Baudrillard – Why hasn’t everything already disappeared",
+        "— Jean Baudrillard – Why hasn't everything already disappeared",
         "Industrial robots are designed to perform repetitive tasks with near-perfect precision. They operate without hesitation, exhaustion or loss of concentration. This is the mastery of automation, a synchronised symphony.",
         "From Taylorism to contemporary artificial intelligence, the utopia of automation has become increasingly prevalent. Having already transformed the world of industrial production, it has now taken hold of our thinking, judgement and memory.",
         "This is the age of La Société Automatique (The Automatic Society), the title of a Bernard Stiegler lecture describing the total automation of our lives. All areas of existence are merging into an invisible network of computations; digital utilitarianism is supplanting human decisions, imposing efficiency-driven logic that reduces our scope for action. Technology is becoming the invisible architect of our lives.",
@@ -97,6 +97,34 @@ const LA_SOCIETE_AUTOMATIQUE: EventDetail = {
       id: "6",
       src: "https://www.imal.org/media/pages/events/la-societe-automatique/3353444115-1764939865/felix-luque-imal-2025-2792-2400x.jpg",
       alt: "Installation View 6",
+    },
+  ],
+  // Credits section moved from hard-coded to data-driven
+  credits: [
+    { role: "Music", name: "Le Motel & Ben Bertrand" },
+    { role: "Choreography and performance", name: "Mercedes Dassy" },
+    { role: "Exhibition design", name: "Nel Verbeke" },
+    { role: "Photos", name: "Alexander Popelier" },
+  ],
+  // Partners section moved from hard-coded to data-driven
+  partners: [
+    {
+      id: "1",
+      src: "https://www.imal.org/media/pages/events/la-societe-automatique/120168437-1761232710/logo2_abxl.svg",
+      alt: "Partner Logo",
+      maxWidth: 160,
+    },
+    {
+      id: "2",
+      src: "https://www.imal.org/media/pages/events/la-societe-automatique/233211227-1761232710/logo2-bembajada-1440x.png",
+      alt: "Partner Logo",
+      maxWidth: 200,
+    },
+    {
+      id: "3",
+      src: "https://www.imal.org/media/pages/events/la-societe-automatique/462700860-1761232710/logo2_caecid.svg",
+      alt: "Partner Logo",
+      maxWidth: 180,
     },
   ],
 };

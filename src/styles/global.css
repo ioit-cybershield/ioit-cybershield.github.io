@@ -149,4 +149,33 @@
     font-weight: 300;
     font-style: normal;
   }
+  .font-anon {
+    font-family: "Anonymous Pro", monospace;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .unbounded-regular {
+    font-family: "Unbounded", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-display: block;
+  }
+
+  .unbounded-bold {
+    font-family: "Unbounded", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-display: block;
+  }
+
+  .unbounded-bolder {
+    font-family: "Unbounded", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+  }
 }

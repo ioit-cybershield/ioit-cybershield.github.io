@@ -41,6 +41,18 @@ export interface EventGalleryItem {
   alt: string;
 }
 
+export interface CreditItem {
+  role: string;
+  name: string;
+}
+
+export interface PartnerLogo {
+  id: string;
+  src: string;
+  alt: string;
+  maxWidth?: number;
+}
+
 export interface EventDetail {
   slug: string;
   title: string;
@@ -53,4 +65,6 @@ export interface EventDetail {
   infoRows: EventInfoRow[];
   bodySections: EventBodySection[];
   gallery: EventGalleryItem[];
+  credits?: CreditItem[]; // Optional
+  partners?: PartnerLogo[]; // Optional
 }

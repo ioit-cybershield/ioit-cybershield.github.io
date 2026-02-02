@@ -27,7 +27,7 @@ const event = getEventDetailBySlug(slug);
   <LenisProvider client:load>
     <Navbar client:idle />
 
-    <EventDetailPage event={event}  client:load />
+    <EventDetailPage event={event!}  client:load />
 
     <Footer client:visible={{rootMargin:"100px"}} />
   </LenisProvider>

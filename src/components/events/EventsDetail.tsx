@@ -41,8 +41,7 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
       <main
         id="main"
         aria-labelledby="event-title"
-        // Changed pb-28 to pb-12 since the fixed newsletter bar is gone
-        className="mx-auto max-w-[1160px] px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-10"
+        className="mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pt-10"
       >
         <article className="border-t border-neutral-200 pt-4">
           {/* Header */}
@@ -50,12 +49,12 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
             <div className="space-y-2 md:space-y-3">
               <h1
                 id="event-title"
-                className="flex items-center gap-3 text-[26px] leading-[1.1] tracking-tight sm:text-[32px] md:text-[38px] lg:text-[44px]"
+                className="unbounded-bolder flex items-center gap-3 text-[30px] leading-[1.1] tracking-tight sm:text-[36px] md:text-[42px] lg:text-[48px]"
               >
-                <span className="inline-flex h-[18px] w-[18px] items-center justify-center bg-black" />
+                <span className="inline-flex h-[22px] w-[22px] unbounded-bold items-center justify-center bg-black" />
                 <span className="uppercase">{event.title}</span>
               </h1>
-              <p className="text-[20px] leading-none text-neutral-400 sm:text-[24px] md:text-[28px]">
+              <p className="text-[24px] leading-none text-neutral-400 sm:text-[28px] md:text-[32px]">
                 <time dateTime={event.startDate}>{event.startLabel}</time>
                 {" — "}
                 <time dateTime={event.endDate}>{event.endLabel}</time>
@@ -80,7 +79,7 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
             <aside className="lg:w-[45%]">
               <dl
                 aria-label="Practical information"
-                className="text-[13px] leading-snug sm:text-[14px]"
+                className="text-[17px] unbounded-regular leading-snug sm:text-[18px]"
               >
                 {event.infoRows.map((row, idx) => (
                   <div
@@ -89,10 +88,10 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
                       idx === event.infoRows.length - 1 ? "border-b" : ""
                     }`}
                   >
-                    <dt className="text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                    <dt className="text-[15px] unbounded-bold uppercase tracking-wide text-neutral-500">
                       {row.label}
                     </dt>
-                    <dd className="text-[13px] leading-snug sm:text-[14px]">
+                    <dd className="text-[17px] leading-snug sm:text-[18px]">
                       {row.href ? (
                         <a
                           href={row.href}
@@ -116,13 +115,13 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
           {event.bodySections.map((section, index) => (
             <section
               key={section.id}
-              className={`mt-14 border-t border-neutral-200 pt-10 md:mt-16 md:pt-12 ${
+              className={`mt-14 border-t unbounded-regular border-neutral-200 pt-10 md:mt-16 md:pt-12 ${
                 index === 0 ? "lg:mt-18" : ""
               }`}
             >
               <div className="grid gap-8 md:grid-cols-[minmax(0,0.35fr)_minmax(0,1.65fr)]">
                 <div>{/* Empty title column to match layout */}</div>
-                <div className="space-y-4 text-[14px] leading-relaxed sm:text-[15px] md:text-[16px] md:leading-[1.6]">
+                <div className="space-y-4 text-[18px] leading-relaxed sm:text-[19px] md:text-[20px] md:leading-[1.6]">
                   {section.paragraphs.map((p) => (
                     <p key={p.slice(0, 32)}>{p}</p>
                   ))}
@@ -141,7 +140,7 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="pointer-events-auto flex h-8 w-8 items-center justify-center border border-black bg-white text-[11px] leading-none"
+                  className="pointer-events-auto flex h-10 w-10 items-center justify-center border border-black bg-white text-[15px] leading-none"
                   aria-label="Previous image"
                 >
                   ‹
@@ -149,7 +148,7 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="pointer-events-auto flex h-8 w-8 items-center justify-center border border-black bg-white text-[11px] leading-none"
+                  className="pointer-events-auto flex h-10 w-10 items-center justify-center border border-black bg-white text-[15px] leading-none"
                   aria-label="Next image"
                 >
                   ›
@@ -177,64 +176,62 @@ const EventDetailsPage: FC<EventDetailsPageProps> = ({ event }) => {
             </div>
           </section>
 
-          {/* Credits */}
-          <section
-            id="credits"
-            className="mt-16 border-t border-neutral-200 pt-10 md:mt-18 md:pt-12"
-          >
-            <div className="grid gap-8 md:grid-cols-[minmax(0,0.35fr)_minmax(0,1.65fr)]">
-              <div className="text-[11px] uppercase tracking-[0.18em]">
-                CREDITS
+          {/* Credits - Optional Section */}
+          {event.credits && event.credits.length > 0 && (
+            <section
+              id="credits"
+              className="mt-16 border-t border-neutral-200 pt-10 md:mt-18 md:pt-12"
+            >
+              <div className="grid gap-8 md:grid-cols-[minmax(0,0.35fr)_minmax(0,1.65fr)]">
+                <div className="text-[15px] uppercase tracking-wider unbounded-bold">
+                  CREDITS
+                </div>
+                <div className="text-[18px] leading-relaxed sm:text-[19px] md:text-[20px] md:leading-[1.6]">
+                  <p>
+                    {event.credits.map((credit, index) => (
+                      <span key={credit.role}>
+                        {credit.role}: {credit.name}
+                        {index < event.credits!.length - 1 && <br />}
+                      </span>
+                    ))}
+                  </p>
+                </div>
               </div>
-              <div className="text-[14px] leading-relaxed sm:text-[15px] md:text-[16px] md:leading-[1.6]">
-                <p>
-                  Music: Le Motel &amp; Ben Bertrand
-                  <br />
-                  Choreography and performance: Mercedes Dassy
-                  <br />
-                  Exhibition design: Nel Verbeke
-                  <br />
-                  Photos ©Alexander Popelier
-                </p>
-              </div>
-            </div>
-          </section>
+            </section>
+          )}
 
-          {/* Partners */}
-          <section
-            id="with-the-support-of"
-            aria-labelledby="partners-title"
-            className="mt-16 border-t border-neutral-200 pt-10 md:mt-18 md:pt-12"
-          >
-            <div className="grid items-start gap-8 md:grid-cols-[minmax(0,0.35fr)_minmax(0,1.65fr)]">
-              <div className="text-[11px] uppercase tracking-[0.18em]">
-                <h2 id="partners-title">With the support of</h2>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
-                <div className="max-w-[160px]">
-                  <img
-                    src="https://www.imal.org/media/pages/events/la-societe-automatique/120168437-1761232710/logo2_abxl.svg"
-                    alt="Partner"
-                    className="h-auto w-full object-contain"
-                  />
+          {/* Partners - Optional Section */}
+          {event.partners && event.partners.length > 0 && (
+            <section
+              id="with-the-support-of"
+              aria-labelledby="partners-title"
+              className="mt-16 border-t border-neutral-200 pt-10 md:mt-18 md:pt-12"
+            >
+              <div className="grid items-start gap-8 md:grid-cols-[minmax(0,0.35fr)_minmax(0,1.65fr)]">
+                <div className="text-[15px] uppercase tracking-wider unbounded-bold">
+                  <h2 id="partners-title">With the support of</h2>
                 </div>
-                <div className="max-w-[200px]">
-                  <img
-                    src="https://www.imal.org/media/pages/events/la-societe-automatique/233211227-1761232710/logo2-bembajada-1440x.png"
-                    alt="Partner"
-                    className="h-auto w-full object-contain"
-                  />
-                </div>
-                <div className="max-w-[180px]">
-                  <img
-                    src="https://www.imal.org/media/pages/events/la-societe-automatique/462700860-1761232710/logo2_caecid.svg"
-                    alt="Partner"
-                    className="h-auto w-full object-contain"
-                  />
+                <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
+                  {event.partners.map((partner) => (
+                    <div
+                      key={partner.id}
+                      className={
+                        partner.maxWidth
+                          ? `max-w-[${partner.maxWidth}px]`
+                          : "max-w-[160px]"
+                      }
+                    >
+                      <img
+                        src={partner.src}
+                        alt={partner.alt}
+                        className="h-auto w-full object-contain"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
         </article>
       </main>
     </div>
