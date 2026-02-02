@@ -15,40 +15,42 @@ export type EventItem = {
   };
 };
 
-export type EventInfoRow = {
+// src/types/event-detail.ts
+
+export interface EventHeroImage {
+  url: string;
+  alt: string;
+  aspectRatio: number;
+}
+
+export interface EventInfoRow {
   label: string;
   value: string;
   href?: string;
   external?: boolean;
-};
+}
 
-export type EventBodySection = {
+export interface EventBodySection {
   id: string;
-  title?: string;
   paragraphs: string[];
-};
+}
 
-export type EventGalleryImage = {
+export interface EventGalleryItem {
   id: string;
   src: string;
   alt: string;
-};
+}
 
-export type EventDetail = {
+export interface EventDetail {
   slug: string;
   title: string;
-  startDate: string; // ISO: 2025-11-07
-  endDate: string; // ISO: 2026-02-15
-  // Display labels for the header (e.g. "07.11", "15.02.2026")
+  startDate: string;
+  endDate: string;
   startLabel: string;
   endLabel: string;
   category: string;
-  heroImage: {
-    url: string;
-    alt: string;
-    aspectRatio?: number; // e.g. 1.75
-  };
+  heroImage: EventHeroImage;
   infoRows: EventInfoRow[];
   bodySections: EventBodySection[];
-  gallery: EventGalleryImage[];
-};
+  gallery: EventGalleryItem[];
+}

@@ -6,25 +6,28 @@ import LenisProvider from "../../providers/lenis-provider";
 import Navbar from "../../components/general/Navbar";
 import Footer from "../../components/general/Footer";
 import EventDetailPage from "@/components/events/EventsDetail";
-import { MOCK_EVENTS } from "@/mock/events-data";
+// import { MOCK_EVENTS } from "@/mock/events-data";
+import { getAllEventDetailSlugs, getEventDetailBySlug } from "@/mock/event-detail-data";
 
 
 // Required in static mode for dynamic routes
 export async function getStaticPaths() {
-  return MOCK_EVENTS.map((event) => ({
-    params: { slug: event.slug },
-    // You could also pass extra data via `props` later if you like
+  const slugs = getAllEventDetailSlugs();
+  return slugs.map((slug) => ({
+    params: { slug }
   }));
 }
 
+
 const { slug } = Astro.params;
+const event = getEventDetailBySlug(slug);
 ---
 
 <Layout>
   <LenisProvider client:load>
     <Navbar client:idle />
 
-    <EventDetailPage  client:load />
+    <EventDetailPage event={event}  client:load />
 
     <Footer client:visible={{rootMargin:"100px"}} />
   </LenisProvider>
