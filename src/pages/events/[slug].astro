@@ -1,0 +1,31 @@
+---
+// src/pages/events/[slug].astro
+
+import Layout from "../../layouts/Layout.astro";
+import LenisProvider from "../../providers/lenis-provider";
+import Navbar from "../../components/general/Navbar";
+import Footer from "../../components/general/Footer";
+import EventDetailPage from "@/components/events/EventsDetail";
+import { MOCK_EVENTS } from "@/mock/events-data";
+
+
+// Required in static mode for dynamic routes
+export async function getStaticPaths() {
+  return MOCK_EVENTS.map((event) => ({
+    params: { slug: event.slug },
+    // You could also pass extra data via `props` later if you like
+  }));
+}
+
+const { slug } = Astro.params;
+---
+
+<Layout>
+  <LenisProvider client:load>
+    <Navbar client:idle />
+
+    <EventDetailPage  client:load />
+
+    <Footer client:visible={{rootMargin:"100px"}} />
+  </LenisProvider>
+</Layout>
