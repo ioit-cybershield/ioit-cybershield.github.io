@@ -6,7 +6,7 @@ export const MOCK_EVENTS: EventItem[] = [
     id: "1",
     layout: "hero",
     title: "Celebrating almost a decade of discourse, connection and advocacy",
-    slug: "celebrating-almost-a-decade",
+    slug: "la-societe-automatique",
     date: "24.10.2025",
     excerpt:
       "After almost ten years of critical inquiry and advocacy for Aotearoa's international visual arts community, Contemporary HUM has come to a close. Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus deserunt libero doloremque at vitae eum?",
