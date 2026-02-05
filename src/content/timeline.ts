@@ -5,7 +5,9 @@ export type TimelineState = {
   desc: string;
 };
 
-export const TIMELINE_STATES: TimelineState[] = [
+// const ADMINAPIURL = import.meta.env.ADMINAPIURL ?? "http://localhost:3000";
+
+export const DEFAULT_TIMELINE_STATES: TimelineState[] = [
   {
     label: "Past",
     titleLines: ["Early days", "of CyberShield"],
@@ -22,3 +24,36 @@ export const TIMELINE_STATES: TimelineState[] = [
     desc: "Collaborations, inter‑college events, research and advanced tracks.",
   },
 ];
+const ADMINAPIURL = import.meta.env.ADMINAPIURL ?? "http://localhost:3000";
+
+async function fetchTimelineStates(): Promise<TimelineState[]> {
+  try {
+    const res = await fetch(`${ADMINAPIURL}/api/landing/timeline`);
+    if (!res.ok) throw new Error("Failed to load timeline content");
+
+    const data = await res.json();
+    const apiStates = data.states;
+
+    if (!Array.isArray(apiStates) || apiStates.length === 0) {
+      return DEFAULT_TIMELINE_STATES;
+    }
+
+    return apiStates.map((state: any) => {
+      const raw = state.titleLines ?? "";
+      const [line1, line2 = ""] = raw
+        .split(",", 2)
+        .map((s: string) => s.trim());
+
+      return {
+        label: state.label,
+        titleLines: [line1, line2].filter(Boolean),
+        desc: state.desc,
+      };
+    });
+  } catch (err) {
+    console.error(err);
+    return DEFAULT_TIMELINE_STATES;
+  }
+}
+
+export const TIMELINE_STATES: TimelineState[] = await fetchTimelineStates();
