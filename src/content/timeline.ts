@@ -1,57 +1,54 @@
-// src/content/timeline.ts
 export type TimelineState = {
+  key: string;
   label: string;
-  titleLines: string[];
+  titleLine1: string;
+  titleLine2?: string;
   desc: string;
 };
 
-// const ADMINAPIURL = import.meta.env.ADMINAPIURL ?? "http://localhost:3000";
+// ADMINAPIURL = import.meta.env.ADMINAPIURL ?? "http://localhost:3000";
 
 export const DEFAULT_TIMELINE_STATES: TimelineState[] = [
   {
+    key: "past",
     label: "Past",
-    titleLines: ["Early days", "of CyberShield"],
+    titleLine1: "Early days",
+    titleLine2: "of CyberShield",
     desc: "How the club started, first meetups, and initial workshops.",
   },
   {
+    key: "today",
     label: "Today",
-    titleLines: ["Active community", "learning by doing"],
+    titleLine1: "Active community",
+    titleLine2: "learning by doing",
     desc: "Regular workshops, CTFs, awareness sessions and internal projects.",
   },
   {
+    key: "future",
     label: "Future",
-    titleLines: ["Scaling impact", "across the campus"],
-    desc: "Collaborations, inter‑college events, research and advanced tracks.",
+    titleLine1: "Scaling impact",
+    titleLine2: "across the campus",
+    desc: "Collaborations, intercollege events, research and advanced tracks.",
   },
 ];
+
 const ADMINAPIURL = import.meta.env.ADMINAPIURL ?? "http://localhost:3000";
 
-async function fetchTimelineStates(): Promise<TimelineState[]> {
+export async function fetchTimelineStates(): Promise<TimelineState[]> {
   try {
     const res = await fetch(`${ADMINAPIURL}/api/landing/timeline`);
-    if (!res.ok) throw new Error("Failed to load timeline content");
+    if (!res.ok) throw new Error("Failed to fetch timeline");
+    const json = await res.json();
+    const states = json.states as any[];
 
-    const data = await res.json();
-    const apiStates = data.states;
-
-    if (!Array.isArray(apiStates) || apiStates.length === 0) {
-      return DEFAULT_TIMELINE_STATES;
-    }
-
-    return apiStates.map((state: any) => {
-      const raw = state.titleLines ?? "";
-      const [line1, line2 = ""] = raw
-        .split(",", 2)
-        .map((s: string) => s.trim());
-
-      return {
-        label: state.label,
-        titleLines: [line1, line2].filter(Boolean),
-        desc: state.desc,
-      };
-    });
-  } catch (err) {
-    console.error(err);
+    return states.slice(0, 3).map((state) => ({
+      key: state.key,
+      label: state.label,
+      titleLine1: state.titleLine1,
+      titleLine2: state.titleLine2 ?? undefined,
+      desc: state.desc,
+    }));
+  } catch {
     return DEFAULT_TIMELINE_STATES;
   }
 }
