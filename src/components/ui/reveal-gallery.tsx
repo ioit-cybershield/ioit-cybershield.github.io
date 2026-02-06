@@ -182,7 +182,6 @@ export default function RevealGallery({ items }: Props) {
               onClick={() => handleCardClick(item.id)}
               className="group flex w-full max-w-md cursor-pointer flex-col gap-3"
             >
-              {/* Image Container: Restored 'aspect-4/3' from Old Version */}
               <div className="relative aspect-4/3 rounded-xl border border-zinc-200/50 bg-zinc-100 overflow-hidden">
                 <img
                   src={item.imageSrc}
@@ -190,7 +189,6 @@ export default function RevealGallery({ items }: Props) {
                   className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
                 />
 
-                {/* Hover Overlay: Restored slide-up animation from Old Version */}
                 <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/10">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white opacity-0 shadow-lg transition-all duration-300 translate-y-4 group-hover:translate-y-0 group-hover:opacity-100">
                     <ArrowUpRight size={20} className="text-zinc-900" />
@@ -198,7 +196,6 @@ export default function RevealGallery({ items }: Props) {
                 </div>
               </div>
 
-              {/* Text Content */}
               <div className="flex flex-col gap-2">
                 <div>
                   <h3 className="text-xl font-semibold text-zinc-900 transition-colors group-hover:text-zinc-600">
@@ -213,32 +210,7 @@ export default function RevealGallery({ items }: Props) {
                     {item.description}
                   </p>
                 </div>
-
-                {item.tags && item.tags.length > 0 && (
-                  <div className="mt-1 flex flex-wrap gap-2">
-                    {item.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium uppercase tracking-wider text-zinc-500"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {item.buttonLabel && item.buttonHref && (
-                  <div className="mt-3">
-                    <a
-                      href={item.buttonHref}
-                      className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-zinc-900 hover:text-zinc-600"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span>{item.buttonLabel}</span>
-                      <ArrowUpRight size={14} />
-                    </a>
-                  </div>
-                )}
+                {/* Removed Tags and Buttons from here (Card View) */}
               </div>
             </div>
           ))}
@@ -283,6 +255,7 @@ export default function RevealGallery({ items }: Props) {
                     ref={textRef}
                     className="px-8 py-12 md:p-12 flex flex-col items-start text-left"
                   >
+                    {/* Tags are preserved here (Modal View) */}
                     {Array.isArray(activeItem!.tags) &&
                       activeItem!.tags.length > 0 && (
                         <div className="mb-6 flex flex-wrap gap-2">
@@ -312,6 +285,7 @@ export default function RevealGallery({ items }: Props) {
                       {activeItem!.content}
                     </div>
 
+                    {/* Button is preserved here (Modal View) */}
                     {activeItem!.buttonLabel && activeItem!.buttonHref && (
                       <a
                         href={activeItem!.buttonHref}

@@ -9,7 +9,7 @@ const ADMIN_API_URL = import.meta.env.ADMIN_API_URL || "http://localhost:3000";
 
 async function fetchNavItems(): Promise<NavItem[]> {
   try {
-    const response = await fetch(`${ADMIN_API_URL}/api/navbar`, {
+    const response = await fetch(`${ADMIN_API_URL}/api/general/navbar`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -1,9 +1,10 @@
-// src/components/Footer.tsx
+// src/components/general/Footer.tsx
 
 import React, { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LogoIconWhite } from "@/components/ui/logo-text-copyright";
+import { footerContent } from "@/content/footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,6 +56,25 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// Map social platform -> icon component (with generic fallback)
+const renderSocialIcon = (platform: string, className: string) => {
+  const key = platform.toLowerCase();
+  if (key === "x" || key === "twitter") return <XIcon className={className} />;
+  if (key === "linkedin") return <LinkedInIcon className={className} />;
+  if (key === "instagram") return <InstagramIcon className={className} />;
+
+  return (
+    <div
+      className={
+        "flex h-4 w-4 items-center justify-center rounded-full border border-white/50 text-[9px] font-bold uppercase " +
+        className
+      }
+    >
+      {key.slice(0, 2)}
+    </div>
+  );
+};
+
 // --- Subcomponent: The Swipe Grid Item ---
 
 interface GridLinkProps {
@@ -91,6 +111,12 @@ const GridLink = ({ href, label }: GridLinkProps) => {
 const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  const { gridLinks, homeLink, legalLinks, socialLinks, copyrightText } =
+    footerContent;
+
+  const sortedLegal = [...legalLinks].sort((a, b) => a.order - b.order);
+  const sortedSocial = [...socialLinks].sort((a, b) => a.order - b.order);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -133,10 +159,9 @@ const Footer = () => {
       <div>
         {/* Navigation Grid */}
         <div className="grid w-full grid-cols-1 md:grid-cols-4 border-2 border-neutral-800">
-          <GridLink href="/events" label="Events" />
-          <GridLink href="/about" label="About Us" />
-          <GridLink href="/resources" label="Resources" />
-          <GridLink href="/contact" label="Join Us" />
+          {gridLinks.slice(0, 4).map((link, index) => (
+            <GridLink key={index} href={link.href} label={link.label} />
+          ))}
         </div>
 
         {/* Bottom Section */}
@@ -145,28 +170,22 @@ const Footer = () => {
           {/* CHANGE 6: Reduced gap from gap-6 to gap-4, margin bottom from mb-12 to mb-8 */}
           <div className="flex flex-col justify-between gap-4 md:gap-6 md:flex-row md:items-center mb-8 md:mb-12">
             <a
-              href="/"
+              href={homeLink.href}
               className="text-lg text-[#E2F949] hover:underline hover:text-white transition-colors"
             >
-              Home
+              {homeLink.label}
             </a>
 
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-neutral-400 text-sm">
-              <a
-                href="/privacy-policy"
-                className="hover:text-white transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a href="/terms" className="hover:text-white transition-colors">
-                Terms
-              </a>
-              <a
-                href="/scam-prevention"
-                className="hover:text-white transition-colors"
-              >
-                Scam Prevention
-              </a>
+              {sortedLegal.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  className="hover:text-white transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
           </div>
 
@@ -176,7 +195,7 @@ const Footer = () => {
             className="flex flex-col-reverse items-center justify-between gap-6 md:gap-8 md:flex-row text-xs text-neutral-500 font-mono pb-6 md:pb-10"
           >
             <div className="w-full md:w-1/3 text-center md:text-left">
-              © 2026 CyberShield. All Rights Reserved.
+              {copyrightText}
             </div>
 
             <div className="w-full md:w-1/3 flex justify-center">
@@ -187,30 +206,18 @@ const Footer = () => {
             </div>
 
             <div className="w-full md:w-1/3 flex justify-center md:justify-end gap-6 text-white">
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#E2F949] transition-colors"
-              >
-                <XIcon className="h-4 w-4" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#E2F949] transition-colors"
-              >
-                <LinkedInIcon className="h-4 w-4" />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#E2F949] transition-colors"
-              >
-                <InstagramIcon className="h-4 w-4" />
-              </a>
+              {sortedSocial.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-[#E2F949] transition-colors"
+                  aria-label={link.label}
+                >
+                  {renderSocialIcon(link.platform, "h-4 w-4")}
+                </a>
+              ))}
             </div>
           </div>
         </div>
