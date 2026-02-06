@@ -263,7 +263,7 @@ const CallToAction: React.FC = () => {
           }}
         >
           {/* Top: left heading block */}
-          <div className="w-full max-w-[40rem]">
+          <div className="w-full max-w-160">
             <div className="overflow-hidden mb-[-0.4em]">
               <h2
                 ref={titleLine1Ref}
@@ -284,7 +284,7 @@ const CallToAction: React.FC = () => {
 
           {/* Bottom: right CTA block */}
           <div className="w-full flex justify-end">
-            <div className="max-w-[34rem] text-right">
+            <div className="max-w-136 text-right">
               <div className="overflow-hidden">
                 <h2
                   ref={subHeadRef}
@@ -319,7 +319,7 @@ const CallToAction: React.FC = () => {
                       "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
                   }}
                 >
-                  <span className="scan-line absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-0" />
+                  <span className="scan-line absolute top-0 bottom-0 w-1/3 bg-linear-to-r from-transparent via-white/60 to-transparent opacity-0" />
                   <span className="btn-glitch absolute inset-0 bg-[#ff0040] opacity-0 mix-blend-multiply" />
                   <span
                     className="btn-text relative z-10"
@@ -341,7 +341,7 @@ const CallToAction: React.FC = () => {
                       "polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px)",
                   }}
                 >
-                  <span className="scan-line absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-[#e5ecda]/70 to-transparent opacity-0" />
+                  <span className="scan-line absolute top-0 bottom-0 w-1/3 bg-linear-to-r from-transparent via-[#e5ecda]/70 to-transparent opacity-0" />
                   <span className="btn-glitch absolute inset-0 bg-[#e5ecda] opacity-0 mix-blend-overlay" />
                   <span
                     className="btn-text relative z-10"
