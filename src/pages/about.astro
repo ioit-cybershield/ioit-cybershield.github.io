@@ -1,10 +1,11 @@
 ---
 import Navbar from "@/components/general/Navbar"
+import { navbarContent } from "@/content/nav"
 import Layout from "@/layouts/Layout.astro"
 import LenisProvider from "@/providers/lenis-provider"
 ---
 <Layout>
     <LenisProvider client:load>
-        <Navbar client:load />
+        <Navbar navbarContent={navbarContent} client:load />
     </LenisProvider>
 </Layout>
