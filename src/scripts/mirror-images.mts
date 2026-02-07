@@ -2,9 +2,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
 const ADMIN_API_URL = process.env.ADMIN_API_URL;
 
