@@ -32,11 +32,11 @@ export const DEFAULT_TIMELINE_STATES: TimelineState[] = [
   },
 ];
 
-const ADMINAPIURL = import.meta.env.ADMINAPIURL ?? "http://localhost:3000";
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL ?? "http://localhost:3000";
 
 export async function fetchTimelineStates(): Promise<TimelineState[]> {
   try {
-    const res = await fetch(`${ADMINAPIURL}/api/landing/timeline`);
+    const res = await fetch(`${ADMIN_API_URL}/api/landing/timeline`);
     if (!res.ok) throw new Error("Failed to fetch timeline");
     const json = await res.json();
     const states = json.states as any[];

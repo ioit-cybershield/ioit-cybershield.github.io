@@ -24,11 +24,7 @@ const FALLBACK_CTA: CtaContent = {
   secondaryHref: "/contact",
 };
 
-const ADMIN_API_URL =
-  import.meta.env.ADMIN_API_URL ??
-  // backwards-compat with footer's env name
-  (import.meta.env.ADMINAPIURL as string | undefined) ??
-  "http://localhost:3000";
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL ?? "http://localhost:3000";
 
 async function fetchCta(): Promise<CtaContent> {
   try {

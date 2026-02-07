@@ -28,7 +28,7 @@ export interface FooterContent {
   copyrightText: string;
 }
 
-const ADMINAPIURL = import.meta.env.ADMINAPIURL ?? "http://localhost:3000";
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL ?? "http://localhost:3000";
 
 // Fallback: matches your current static footer layout
 const FALLBACK_FOOTER: FooterContent = {
@@ -123,7 +123,7 @@ function normalizeSocialLinks(raw: any): FooterSocialLink[] {
 
 async function fetchFooter(): Promise<FooterContent> {
   try {
-    const res = await fetch(`${ADMINAPIURL}/api/general/footer`, {
+    const res = await fetch(`${ADMIN_API_URL}/api/general/footer`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
