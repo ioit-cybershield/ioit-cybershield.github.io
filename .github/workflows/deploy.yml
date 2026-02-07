@@ -28,7 +28,7 @@ jobs:
 
       #The step where the images are mirrored before building the site
       - name: Mirror gallery images
-        run: node scripts/mirror-gallery-images.mts
+        run: node scripts/mirror-images.mts
         env:
           ADMIN_API_URL: ${{ secrets.ADMIN_API_URL }}
 
