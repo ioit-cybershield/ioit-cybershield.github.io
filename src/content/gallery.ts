@@ -1,4 +1,5 @@
 import { type RevealItem } from "@/components/ui/reveal-gallery";
+import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
 
 export type GalleryItemContent = {
   id: string;
@@ -13,8 +14,8 @@ export type GalleryItemContent = {
   imageAlt: string;
 };
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
-console.log("Using ADMIN_API_URL:", ADMIN_API_URL);
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
+console.log("Using PUBLIC_ADMIN_API_URL:", PUBLIC_ADMIN_API_URL);
 // Helper: derive local static path from blob path + id
 function getLocalImagePath(item: GalleryItemContent): string {
   const extMatch = item.imageBlobPath.match(/\.[a-zA-Z0-9]+$/);
@@ -25,7 +26,7 @@ function getLocalImagePath(item: GalleryItemContent): string {
 async function fetchGallery(): Promise<RevealItem[]> {
   try {
     const res = await fetch(
-      `${ADMIN_API_URL}/api/landing/gallery?landingOnly=true`,
+      `${PUBLIC_ADMIN_API_URL}/api/landing/gallery?landingOnly=true`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },

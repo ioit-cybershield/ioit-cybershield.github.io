@@ -1,3 +1,5 @@
+import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
+
 // src/content/nav.ts - Replace with dynamic fetch
 export type NavItem = {
   id: string;
@@ -5,7 +7,7 @@ export type NavItem = {
   href?: string;
 };
 
-const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 async function fetchNavItems(): Promise<NavItem[]> {
   try {

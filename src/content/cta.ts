@@ -1,3 +1,5 @@
+import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
+
 // src/content/cta.ts
 export interface CtaContent {
   headingLine1: string;
@@ -24,11 +26,11 @@ const FALLBACK_CTA: CtaContent = {
   secondaryHref: "/contact",
 };
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 async function fetchCta(): Promise<CtaContent> {
   try {
-    const res = await fetch(`${ADMIN_API_URL}/api/landing/cta`, {
+    const res = await fetch(`${PUBLIC_ADMIN_API_URL}/api/landing/cta`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

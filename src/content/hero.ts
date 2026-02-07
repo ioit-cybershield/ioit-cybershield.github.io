@@ -1,5 +1,7 @@
 // src/content/hero.ts
-const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
+
+import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
 
 export type LandingHeroContent = {
   titleLine1: string;

@@ -1,5 +1,7 @@
 // src/content/footer.ts
 
+import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
+
 export type FooterGridLink = {
   label: string;
   href: string;
@@ -28,7 +30,7 @@ export interface FooterContent {
   copyrightText: string;
 }
 
-const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 // Fallback: matches your current static footer layout
 const FALLBACK_FOOTER: FooterContent = {

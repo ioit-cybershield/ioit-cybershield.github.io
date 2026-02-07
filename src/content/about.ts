@@ -1,3 +1,5 @@
+import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
+
 // src/content/about.ts
 export type AboutItem = {
   title: string;
@@ -12,11 +14,11 @@ export interface AboutContent {
   numberRight: number;
 }
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 async function fetchAbout(): Promise<AboutContent> {
   try {
-    const res = await fetch(`${ADMIN_API_URL}/api/landing/about`, {
+    const res = await fetch(`${PUBLIC_ADMIN_API_URL}/api/landing/about`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

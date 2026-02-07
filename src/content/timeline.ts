@@ -1,3 +1,5 @@
+import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
+
 export type TimelineState = {
   key: string;
   label: string;
@@ -32,7 +34,7 @@ export const DEFAULT_TIMELINE_STATES: TimelineState[] = [
   },
 ];
 
-const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 export async function fetchTimelineStates(): Promise<TimelineState[]> {
   try {
