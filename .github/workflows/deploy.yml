@@ -26,6 +26,12 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
 
+      #The step where the images are mirrored before building the site
+      - name: Mirror gallery images
+        run: node src/scripts/mirror-gallery-images.mts
+        env:
+          ADMIN_API_URL: ${{ secrets.ADMIN_API_URL }}
+
       # Installs dependencies and builds the project
       - name: Install, build, and upload your site
         uses: withastro/action@v3

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { aboutContent } from "@/content/about";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -130,7 +131,7 @@ const AboutSection = () => {
             <div className="animate-fade-up absolute -top-16 left-0 md:-left-8 lg:-left-24 hidden md:block z-10 pointer-events-none">
               <div className="relative">
                 <p className="text-[#f84131] font-serif italic text-lg transform -rotate-6 translate-x-4">
-                  Why CyberShield?
+                  {aboutContent.scribbleLabel}
                 </p>
                 <svg
                   width="80"
@@ -150,27 +151,13 @@ const AboutSection = () => {
             {/* Main Headline */}
             <div className="mb-20 md:mb-32">
               <h3 className="animate-fade-up text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] leading-[0.95] tracking-tight font-medium max-w-5xl">
-                Empowering cybersecurity enthusiasts to protect, defend, and
-                lead in the digital world.
+                {aboutContent.headline}
               </h3>
             </div>
 
             {/* Editorial List */}
             <div className="w-full flex flex-col">
-              {[
-                {
-                  title: "Enhance cybersecurity skills",
-                  text: "Learn by doing through hands-on workshops, labs, and CTF-style challenges that build practical skills in ethical hacking, network security, and threat mitigation.",
-                },
-                {
-                  title: "Promote a security-first mindset",
-                  text: "Stay ahead of emerging threats with talks, demos, and discussions on the latest attacks, defenses, and ethical guidelines in cybersecurity.",
-                },
-                {
-                  title: "Foster collaboration and leadership",
-                  text: "Join a supportive community where members share knowledge, work on real-world projects, and connect with experts to solve genuine security challenges.",
-                },
-              ].map((item, index) => (
+              {aboutContent.items.map((item, index) => (
                 <div
                   key={index}
                   className="animate-fade-up grid grid-cols-1 md:grid-cols-12 gap-y-4 md:gap-x-12 py-10 md:py-14 border-t border-[#151313]/10 last:border-b"
@@ -205,7 +192,7 @@ const AboutSection = () => {
             className="text-[30vw] md:text-[25rem] leading-none font-bold text-transparent tracking-tighter"
             style={{ WebkitTextStroke: "1px #e49700" }}
           >
-            20
+            {aboutContent.numberLeft}
           </span>
         </div>
         <div className="heavy-number-right z-0 -ml-2 md:-ml-12">
@@ -213,7 +200,7 @@ const AboutSection = () => {
             className="text-[30vw] md:text-[25rem] leading-none font-bold text-transparent tracking-tighter"
             style={{ WebkitTextStroke: "1px #e49700" }}
           >
-            25
+            {aboutContent.numberRight}
           </span>
         </div>
       </div>

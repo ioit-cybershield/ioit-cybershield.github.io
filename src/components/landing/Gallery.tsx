@@ -1,6 +1,7 @@
+// src/components/landing/Gallery.tsx
 import RevealGallery from "@/components/ui/reveal-gallery";
-import { eventsData } from "@/content/events";
+import { GALLERY_ITEMS } from "@/content/gallery";
 
 export default function Gallery() {
-  return <RevealGallery items={eventsData} />;
+  return <RevealGallery items={GALLERY_ITEMS} />;
 }

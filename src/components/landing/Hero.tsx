@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { heroContent } from "@/content/hero";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -103,17 +104,17 @@ export default function LandingPage() {
           <h1 className="flex select-none flex-col items-start text-[clamp(3.5rem,10vw,11rem)] font-bold leading-[0.8] tracking-[-0.04em] uppercase">
             <div className="relative block">
               <span className="title-mask-inner block translate-y-full">
-                Cyber-Security
+                {heroContent.titleLine1}
               </span>
             </div>
             <div className="relative ml-[12vw] block overflow-hidden md:ml-[8vw]">
               <span className="title-mask-inner block translate-y-full">
-                FOR
+                {heroContent.titleLine2}
               </span>
             </div>
             <div className="relative -ml-[2vw] block overflow-hidden">
               <span className="title-mask-inner block translate-y-full">
-                Everyone
+                {heroContent.titleLine3}
               </span>
             </div>
           </h1>
@@ -124,12 +125,12 @@ export default function LandingPage() {
           <div className="hidden max-w-2xl text-lg font-bold leading-[0.9] tracking-tighter uppercase md:block md:text-xl lg:text-2xl">
             <div className="overflow-hidden">
               <div className="bottom-text-line translate-y-full opacity-0">
-                EMPOWERING A COMMUNITY
+                {heroContent.bottomLine1}
               </div>
             </div>
             <div className="overflow-hidden">
               <div className="bottom-text-line translate-y-full opacity-0">
-                WHERE STUDENTS CONNECT, LEARN & LEAD
+                {heroContent.bottomLine2}
               </div>
             </div>
           </div>
@@ -138,8 +139,14 @@ export default function LandingPage() {
             ref={ctaButtonsRef}
             className="flex w-full flex-col gap-4 md:w-auto md:flex-row"
           >
-            <CTAButton text="Join CyberShield" href="#contact" />
-            <CTAButton text="View upcoming events" href="events" />
+            <CTAButton
+              text={heroContent.primaryLabel}
+              href={heroContent.primaryHref}
+            />
+            <CTAButton
+              text={heroContent.secondaryLabel}
+              href={heroContent.secondaryHref}
+            />
           </div>
         </div>
       </section>

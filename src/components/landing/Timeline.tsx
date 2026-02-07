@@ -24,12 +24,16 @@ export default function TimelineSpinnerSection() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      // Create a timeline that spans the pinned distance
+      // We support between 1 and 3 states, anything else is clamped.
+      const availableRefs = textRefs.current.filter(Boolean);
+      const totalStates = Math.max(1, Math.min(availableRefs.length, 3));
+      const step = 0.9 / totalStates; // use 0–0.9 for text, last 0.1 for spinner fade
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=300%", // Reduced slightly as we removed the CTA, to keep it snappy
+          end: "+=300%", // same pinned distance, tuned for the new copy
           scrub: 0.5,
           pin: true,
           pinSpacing: true,
@@ -40,62 +44,97 @@ export default function TimelineSpinnerSection() {
         },
       });
 
-      // --- ANIMATION: Lockstep Sync ---
-      // IMPORTANT: We treat the timeline as a range from 0 to 1.
+      // Continuous spinner rotation over the full scroll range
+      if (spinnerRef.current) {
+        tl.to(
+          spinnerRef.current,
+          {
+            rotation: 180,
+            transformOrigin: "50% 50%",
+            ease: "none",
+            duration: 1, // 0 → 1 across the entire scroll
+          },
+          0,
+        );
+      }
 
-      // 1. Continuous Spinner Rotation
-      // Fix: Added `duration: 1` to ensure it rotates for the FULL length of the scroll.
-      tl.to(
-        spinnerRef.current,
-        {
-          rotation: 180,
-          transformOrigin: "50% 50%",
-          ease: "none",
-          duration: 1,
-        },
-        0,
-      );
+      // First state starts visible
+      if (textRefs.current[0]) {
+        gsap.set(textRefs.current[0], { opacity: 1, y: 0 });
+      }
 
-      // --- STAGE 1: PAST (Visible initially, fades out) ---
-      // Fade Out (0.0 to 0.25)
-      tl.to(
-        textRefs.current[0],
-        { opacity: 0, y: -40, duration: 0.25, ease: "power1.in" },
-        0,
-      );
+      for (let i = 0; i < totalStates; i++) {
+        const el = textRefs.current[i];
+        if (!el) continue;
 
-      // --- STAGE 2: TODAY (Enters, Stays, Exits) ---
-      // Fade In (0.25 to 0.35)
-      tl.fromTo(
-        textRefs.current[1],
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.1, ease: "power1.out" },
-        0.25,
-      );
-      // Fade Out (0.6 to 0.7)
-      tl.to(
-        textRefs.current[1],
-        { opacity: 0, y: -40, duration: 0.1, ease: "power1.in" },
-        0.6,
-      );
+        const regionStart = i * step;
+        const regionEnd = regionStart + step;
+        const enterDuration = step * 0.3;
+        const exitDuration = step * 0.3;
 
-      // --- STAGE 3: FUTURE (Enters and STAYS) ---
-      // Fade In (0.7 to 0.8)
-      // Fix: We do NOT fade this out. It stays visible as the user scrolls away.
-      tl.fromTo(
-        textRefs.current[2],
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.1, ease: "power1.out" },
-        0.7,
-      );
+        if (i === 0) {
+          // First card only fades out (already visible at start)
+          if (totalStates > 1) {
+            tl.to(
+              el,
+              {
+                opacity: 0,
+                y: -40,
+                duration: exitDuration,
+                ease: "power1.in",
+              },
+              regionEnd - exitDuration,
+            );
+          }
+        } else {
+          // Fade in each subsequent card
+          tl.fromTo(
+            el,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: enterDuration,
+              ease: "power1.out",
+            },
+            regionStart,
+          );
 
-      // (Optional) Subtle spinner fade at the very end to indicate completion
-      tl.to(spinnerRef.current, { opacity: 0.3, duration: 0.2 }, 0.8);
+          // If not the last card, fade it back out
+          if (i < totalStates - 1) {
+            tl.to(
+              el,
+              {
+                opacity: 0,
+                y: -40,
+                duration: exitDuration,
+                ease: "power1.in",
+              },
+              regionEnd - exitDuration,
+            );
+          }
+          // If it *is* the last card, it simply stays visible to the end.
+        }
+      }
+
+      // Optional subtle spinner fade at the very end
+      if (spinnerRef.current) {
+        tl.to(
+          spinnerRef.current,
+          {
+            opacity: 0.3,
+            duration: 0.2,
+          },
+          0.9,
+        );
+      }
     }, section);
 
+    // Guard against layout shifts on hydration
     setTimeout(() => {
       ScrollTrigger.refresh();
     }, 500);
+
     return () => ctx.revert();
   }, []);
 
@@ -139,11 +178,12 @@ export default function TimelineSpinnerSection() {
               </span>
 
               <div className="mb-5 text-balance font-(--font-family-alternate) text-3xl leading-[1.05] md:text-5xl lg:text-[3.4rem]">
-                {state.titleLines.map((line) => (
-                  <p key={line} className="block">
-                    {line}
-                  </p>
-                ))}
+                {state.titleLine1 && (
+                  <p className="block">{state.titleLine1}</p>
+                )}
+                {state.titleLine2 && (
+                  <p className="block">{state.titleLine2}</p>
+                )}
               </div>
 
               <p className="mx-auto max-w-xl text-sm md:text-base text-[#2e2522]">
