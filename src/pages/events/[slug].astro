@@ -8,6 +8,8 @@ import Footer from "../../components/general/Footer";
 import EventDetailPage from "@/components/events/EventsDetail";
 // import { MOCK_EVENTS } from "@/mock/events-data";
 import { getAllEventDetailSlugs, getEventDetailBySlug } from "@/mock/event-detail-data";
+import { navbarContent } from "@/content/nav";
+import { footerContent } from "@/content/footer";
 
 
 // Required in static mode for dynamic routes
@@ -25,10 +27,10 @@ const event = getEventDetailBySlug(slug);
 
 <Layout>
   <LenisProvider client:load>
-    <Navbar client:idle />
+    <Navbar navbarContent={navbarContent} client:idle />
 
     <EventDetailPage event={event!}  client:load />
 
-    <Footer client:visible={{rootMargin:"100px"}} />
+    <Footer footerContent={footerContent} client:visible={{rootMargin:"100px"}} />
   </LenisProvider>
 </Layout>
