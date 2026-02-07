@@ -26,6 +26,17 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
 
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+        # Install dependencies (tsx must be in your package.json)
+      - name: Install dependencies
+        run: npm install
+
       #The step where the images are mirrored before building the site
       - name: Mirror gallery images
         run: tsx src/scripts/mirror-images.mts
