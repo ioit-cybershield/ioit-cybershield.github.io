@@ -1,6 +1,7 @@
 import React, { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { ctaContent } from "@/content/cta";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -269,7 +270,8 @@ const CallToAction: React.FC = () => {
                 ref={titleLine1Ref}
                 className="block text-[7vw] md:text-[3.4vw] leading-[1.1] font-normal text-[#192536] tracking-[-0.02em]"
               >
-                You don’t get many
+                {/* You don’t get many */}
+                {ctaContent.headingLine1}
               </h2>
             </div>
             <div className="overflow-hidden">
@@ -277,7 +279,8 @@ const CallToAction: React.FC = () => {
                 ref={titleLine2Ref}
                 className="block text-[7vw] md:text-[3.4vw] leading-[1.1] font-normal text-[#000000] tracking-[-0.02em]"
               >
-                chances to be early.
+                {/* chances to be early. */}
+                {ctaContent.headingLine2}
               </h2>
             </div>
           </div>
@@ -290,7 +293,8 @@ const CallToAction: React.FC = () => {
                   ref={subHeadRef}
                   className="text-[7vw] md:text-[3vw] leading-[1.1] font-medium text-white mb-4 tracking-[-0.01em]"
                 >
-                  To lead, not follow.
+                  {/* To lead, not follow. */}
+                  {ctaContent.subhead}
                 </h2>
               </div>
 
@@ -298,11 +302,17 @@ const CallToAction: React.FC = () => {
                 ref={bodyRef}
                 className="text-white/90 text-sm md:text-base leading-snug  tracking-[0em] font-light max-w-none inline-block"
               >
-                To shape what cybersecurity becomes — not just adapt to it.
+                {/* To shape what cybersecurity becomes — not just adapt to it.
                 <br />
                 <br />
                 CYBERSHIELD™ IS ALREADY IN THE HANDS OF TEAMS REWRITING THE
-                RULES. IF YOU’RE READY, WE’LL MAKE ROOM FOR YOU.
+                RULES. IF YOU’RE READY, WE’LL MAKE ROOM FOR YOU. */}
+                {/* {ctaContent.body} */}
+                {ctaContent.body.split("\n\n").map((p, i) => (
+                  <p key={i} className={i > 0 ? "mt-3" : ""}>
+                    {p}
+                  </p>
+                ))}
               </div>
 
               <div
@@ -311,7 +321,7 @@ const CallToAction: React.FC = () => {
               >
                 {/* Primary fancy button */}
                 <a
-                  href="#"
+                  href={ctaContent.primaryHref}
                   className="cyber-btn group relative overflow-hidden bg-[#005eff] text-[#142015] px-7 py-3.5 flex items-center justify-center font-bold uppercase tracking-[0.16em] text-[0.78rem] transition-colors hover:bg-[#00d8cd]"
                   style={{
                     fontFamily: '"JetBrains Mono","Fira Code",monospace',
@@ -323,9 +333,9 @@ const CallToAction: React.FC = () => {
                   <span className="btn-glitch absolute inset-0 bg-[#ff0040] opacity-0 mix-blend-multiply" />
                   <span
                     className="btn-text relative z-10"
-                    data-text=">> REQUEST_ACCESS"
+                    data-text={ctaContent.primaryLabel}
                   >
-                    &gt;&gt; REQUEST_ACCESS
+                    {ctaContent.primaryLabel}
                   </span>
                   <span className="absolute top-0 left-0 w-2 h-2 bg-[#142015]" />
                   <span className="absolute bottom-0 right-0 w-2 h-2 bg-[#142015]" />
@@ -333,7 +343,7 @@ const CallToAction: React.FC = () => {
 
                 {/* Secondary fancy button */}
                 <a
-                  href="/contact-us"
+                  href={ctaContent.secondaryHref}
                   className="cyber-btn group relative overflow-hidden border border-[#e5ecda] text-[#e5ecda] px-7 py-3.5 flex items-center justify-center font-bold uppercase tracking-[0.16em] text-[0.78rem] transition-all hover:bg-white/10 hover:border-white"
                   style={{
                     fontFamily: '"JetBrains Mono","Fira Code",monospace',
@@ -345,9 +355,9 @@ const CallToAction: React.FC = () => {
                   <span className="btn-glitch absolute inset-0 bg-[#e5ecda] opacity-0 mix-blend-overlay" />
                   <span
                     className="btn-text relative z-10"
-                    data-text=">> TALK_TO_OUR_TEAM"
+                    data-text={ctaContent.secondaryLabel}
                   >
-                    &gt;&gt; TALK_TO_OUR_TEAM
+                    {ctaContent.secondaryLabel}
                   </span>
                   <span className="absolute top-0 left-0 w-2 h-2 bg-[#e5ecda]" />
                   <span className="absolute bottom-0 right-0 w-2 h-2 bg-[#e5ecda]" />
