@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { NAV_ITEMS } from "@/content/nav";
+import { type NavItem } from "@/content/nav";
 import { LogoBlack, LogoIcon } from "@/components/ui/logo-text-copyright";
 import { useLenis } from "@/providers/lenis-provider";
 
-export default function Navbar() {
+export default function Navbar({
+  navbarContent,
+}: {
+  navbarContent: NavItem[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const isOpenRef = useRef(false);
   const lenis = useLenis();
@@ -191,7 +195,7 @@ export default function Navbar() {
           <div className="flex flex-col md:grid md:grid-cols-2 gap-8 h-full overflow-hidden">
             {/* Nav Links */}
             <nav className="flex flex-col gap-2 shrink-0">
-              {NAV_ITEMS.map((item) => (
+              {navbarContent.map((item) => (
                 <a
                   key={item.id}
                   href={item.href}

@@ -13,17 +13,23 @@ import CTA from '@/components/landing/CTA';
 
 // Import content
 import { heroContent } from '@/content/hero';
+import { navbarContent } from '@/content/nav';
+import { aboutContent } from '@/content/about';
+import { galleryContent } from '@/content/gallery';
+import { TIMELINE_STATES } from '@/content/timeline';
+import { ctaContent } from '@/content/cta';
+import { footerContent } from '@/content/footer';
 ---
 
 <Layout>
   <Preloader client:load />
   <LenisProvider client:load>
-    <Navbar client:idle={{timeout:200}}/>
+    <Navbar navbarContent={navbarContent} client:idle={{timeout:200}}/>
     <HeroSection heroContent={heroContent} client:idle={{timeout:300}}/>
-    <AboutSection client:visible={{rootMargin: "200px"}} />
-    <Gallery client:visible={{rootMargin: "200px"}}/>
-    <TimelineSpinner client:load />
-    <CTA client:visible={{rootMargin: "200px"}}/>
-    <Footer client:visible={{rootMargin: "200px"}} />
+    <AboutSection aboutContent={aboutContent} client:visible={{rootMargin: "200px"}} />
+    <Gallery galleryContent={galleryContent} client:visible={{rootMargin: "200px"}}/>
+    <TimelineSpinner timelineStates={TIMELINE_STATES} client:load />
+    <CTA ctaContent={ctaContent} client:visible={{rootMargin: "200px"}}/>
+    <Footer footerContent={footerContent} client:visible={{rootMargin: "200px"}} />
   </LenisProvider>
 </Layout>

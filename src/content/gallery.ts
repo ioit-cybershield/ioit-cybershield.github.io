@@ -1,5 +1,6 @@
-import { type RevealItem } from "@/components/ui/reveal-gallery";
+// import { type RevealItem } from "@/components/ui/reveal-gallery";
 import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 export type GalleryItemContent = {
   id: string;
@@ -12,6 +13,8 @@ export type GalleryItemContent = {
   imageBlobPath: string;
   imageUrl: string;
   imageAlt: string;
+  imageSrc: string;
+  content?: React.ReactNode;
 };
 
 // const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
@@ -23,7 +26,7 @@ function getLocalImagePath(item: GalleryItemContent): string {
   return `/gallery/${item.id}${ext}`;
 }
 
-async function fetchGallery(): Promise<RevealItem[]> {
+async function fetchGallery(): Promise<GalleryItemContent[]> {
   try {
     const res = await fetch(
       `${PUBLIC_ADMIN_API_URL}/api/landing/gallery?landingOnly=true`,
@@ -57,6 +60,9 @@ async function fetchGallery(): Promise<RevealItem[]> {
         tags: item.tags ?? [],
         buttonLabel: item.buttonLabel,
         buttonHref: item.buttonHref,
+        imageBlobPath: item.imageBlobPath,
+        imageUrl: item.imageUrl,
+        imageAlt: item.imageAlt,
       };
     });
   } catch (error) {
@@ -68,4 +74,4 @@ async function fetchGallery(): Promise<RevealItem[]> {
   }
 }
 
-export const GALLERY_ITEMS: RevealItem[] = await fetchGallery();
+export const galleryContent: GalleryItemContent[] = await fetchGallery();

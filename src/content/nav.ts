@@ -1,4 +1,5 @@
 import { PUBLIC_ADMIN_API_URL } from "@/scripts/config.mjs";
+// const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 // src/content/nav.ts - Replace with dynamic fetch
 export type NavItem = {
@@ -39,4 +40,4 @@ async function fetchNavItems(): Promise<NavItem[]> {
   }
 }
 
-export const NAV_ITEMS = await fetchNavItems();
+export const navbarContent = await fetchNavItems();

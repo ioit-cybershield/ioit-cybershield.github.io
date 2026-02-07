@@ -4,7 +4,7 @@ import React, { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LogoIconWhite } from "@/components/ui/logo-text-copyright";
-import { footerContent } from "@/content/footer";
+import { type FooterContent } from "@/content/footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -108,7 +108,7 @@ const GridLink = ({ href, label }: GridLinkProps) => {
 
 // --- Main Component ---
 
-const Footer = () => {
+const Footer = ({ footerContent }: { footerContent: FooterContent }) => {
   const footerRef = useRef<HTMLElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 

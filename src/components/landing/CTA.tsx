@@ -1,14 +1,18 @@
 import React, { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { ctaContent } from "@/content/cta";
+import { type CtaContent } from "@/content/cta";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // const BG_IMAGE_URL =
 //   "https://cdn.prod.website-files.com/68b5b8542c5c0a63b1d91b3b/69271f09c85e1d1bee5d34ce_bg%20new%20croptab.avif";
 
-const CallToAction: React.FC = () => {
+const CallToAction: React.FC<{ ctaContent: CtaContent }> = ({
+  ctaContent,
+}: {
+  ctaContent: CtaContent;
+}) => {
   const containerRef = useRef<HTMLElement>(null);
   const bgImageRef = useRef<HTMLImageElement>(null);
 

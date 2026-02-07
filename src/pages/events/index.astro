@@ -8,17 +8,19 @@ import EventsFeed from "@/components/events/EventsFeed";
 import Hero from "@/components/events/Hero";
 
 import {MOCK_EVENTS} from "@/mock/events-data"
+import { navbarContent } from "@/content/nav";
+import { footerContent } from "@/content/footer";
 ---
 
 <Layout>
   <LenisProvider client:load>
-    <Navbar client:idle={{ timeout: 200 }} />
+    <Navbar navbarContent={navbarContent} client:idle={{ timeout: 200 }} />
     
     <main class="min-h-screen">
         <Hero client:load />
       <EventsFeed items={MOCK_EVENTS} client:visible={{ rootMargin: "100px" }} />
     </main>
 
-    <Footer client:visible={{ rootMargin: "100px" }} />
+    <Footer footerContent={footerContent} client:visible={{ rootMargin: "100px" }} />
   </LenisProvider>
 </Layout>

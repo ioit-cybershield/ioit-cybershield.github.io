@@ -2,6 +2,7 @@ import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
 import { X, ArrowUpRight } from "lucide-react";
+import type { GalleryItemContent } from "@/content/gallery";
 
 export interface RevealItem {
   id: string;
@@ -16,7 +17,7 @@ export interface RevealItem {
 }
 
 interface Props {
-  items: RevealItem[];
+  items: GalleryItemContent[];
 }
 
 export default function RevealGallery({ items }: Props) {
