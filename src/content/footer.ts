@@ -28,7 +28,7 @@ export interface FooterContent {
   copyrightText: string;
 }
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
+const ADMIN_API_URL = process.env.ADMIN_API_URL;
 
 // Fallback: matches your current static footer layout
 const FALLBACK_FOOTER: FooterContent = {

@@ -24,7 +24,7 @@ const FALLBACK_CTA: CtaContent = {
   secondaryHref: "/contact",
 };
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
+const ADMIN_API_URL = process.env.ADMIN_API_URL;
 
 async function fetchCta(): Promise<CtaContent> {
   try {
