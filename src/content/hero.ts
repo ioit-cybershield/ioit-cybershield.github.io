@@ -1,5 +1,5 @@
 // src/content/hero.ts
-const ADMIN_API_URL = process.env.ADMIN_API_URL;
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
 
 export type LandingHeroContent = {
   titleLine1: string;

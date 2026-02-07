@@ -13,8 +13,8 @@ export type GalleryItemContent = {
   imageAlt: string;
 };
 
-const ADMIN_API_URL = process.env.ADMIN_API_URL;
-
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
+console.log("Using ADMIN_API_URL:", ADMIN_API_URL);
 // Helper: derive local static path from blob path + id
 function getLocalImagePath(item: GalleryItemContent): string {
   const extMatch = item.imageBlobPath.match(/\.[a-zA-Z0-9]+$/);
