@@ -9,13 +9,17 @@ import Gallery from "@/components/landing/Gallery"
 import Footer from "@/components/general/Footer"
 import Preloader from '@/components/ui/preloader';
 import CTA from '@/components/landing/CTA';
+
+
+// Import content
+import { heroContent } from '@/content/hero';
 ---
 
 <Layout>
   <Preloader client:load />
   <LenisProvider client:load>
     <Navbar client:idle={{timeout:200}}/>
-    <HeroSection client:idle={{timeout:300}}/>
+    <HeroSection heroContent={heroContent} client:idle={{timeout:300}}/>
     <AboutSection client:visible={{rootMargin: "200px"}} />
     <Gallery client:visible={{rootMargin: "200px"}}/>
     <TimelineSpinner client:load />

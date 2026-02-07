@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { heroContent } from "@/content/hero";
+import { type LandingHeroContent } from "@/content/hero";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -10,7 +10,11 @@ if (typeof window !== "undefined") {
 
 const CUSTOM_EASE = "cubic-bezier(0.43, 0.195, 0.02, 1)";
 
-export default function LandingPage() {
+export default function HeroSection({
+  heroContent,
+}: {
+  heroContent: LandingHeroContent;
+}) {
   const containerRef = useRef<HTMLElement>(null);
   const bgMediaRef = useRef<HTMLDivElement>(null);
   const ctaButtonsRef = useRef<HTMLDivElement>(null);
