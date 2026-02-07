@@ -47,7 +47,6 @@ jobs:
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         env:
-          NODE_ENV: production
           ADMIN_API_URL: ${{ secrets.ADMIN_API_URL }}
         # with:
         # path: . # (Optional) Uncomment and set if your Astro project is in a subdirectory
