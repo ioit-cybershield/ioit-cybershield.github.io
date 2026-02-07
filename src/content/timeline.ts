@@ -32,7 +32,7 @@ export const DEFAULT_TIMELINE_STATES: TimelineState[] = [
   },
 ];
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL ?? "http://localhost:3000";
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
 
 export async function fetchTimelineStates(): Promise<TimelineState[]> {
   try {

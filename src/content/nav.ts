@@ -5,7 +5,7 @@ export type NavItem = {
   href?: string;
 };
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL || "http://localhost:3000";
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
 
 async function fetchNavItems(): Promise<NavItem[]> {
   try {

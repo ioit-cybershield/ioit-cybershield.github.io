@@ -12,7 +12,7 @@ export interface AboutContent {
   numberRight: number;
 }
 
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL ?? "http://localhost:3000";
+const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
 
 async function fetchAbout(): Promise<AboutContent> {
   try {
