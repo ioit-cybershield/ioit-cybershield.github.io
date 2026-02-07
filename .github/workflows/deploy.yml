@@ -22,6 +22,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PUBLIC_ADMIN_API_URL: ${{ secrets.PUBLIC_ADMIN_API_URL }}
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
@@ -40,14 +42,11 @@ jobs:
       #The step where the images are mirrored before building the site
       - name: Mirror gallery images
         run: tsx src/scripts/mirror-images.mts
-        env:
-          ADMIN_API_URL: ${{ secrets.ADMIN_API_URL }}
 
       # Installs dependencies and builds the project
       - name: Install, build, and upload your site
         uses: withastro/action@v3
-        env:
-          ADMIN_API_URL: ${{ secrets.ADMIN_API_URL }}
+
         # with:
         # path: . # (Optional) Uncomment and set if your Astro project is in a subdirectory
 

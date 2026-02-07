@@ -1,5 +1,5 @@
 // src/content/hero.ts
-const ADMIN_API_URL = import.meta.env.ADMIN_API_URL;
+const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 export type LandingHeroContent = {
   titleLine1: string;
@@ -15,7 +15,7 @@ export type LandingHeroContent = {
 
 async function fetchHero(): Promise<LandingHeroContent> {
   try {
-    const res = await fetch(`${ADMIN_API_URL}/api/landing/hero`, {
+    const res = await fetch(`${PUBLIC_ADMIN_API_URL}/api/landing/hero`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

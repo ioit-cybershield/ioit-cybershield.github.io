@@ -6,10 +6,12 @@ import process from "node:process";
 
 // dotenv.config();
 
-const ADMIN_API_URL = process.env.ADMIN_API_URL;
+const PUBLIC_ADMIN_API_URL = process.env.PUBLIC_ADMIN_API_URL;
 
-if (!ADMIN_API_URL) {
-  console.error("ADMIN_API_URL is not set; skipping gallery image mirroring.");
+if (!PUBLIC_ADMIN_API_URL) {
+  console.error(
+    "PUBLIC_ADMIN_API_URL is not set; skipping gallery image mirroring.",
+  );
   process.exit(0);
 }
 
@@ -30,7 +32,7 @@ type AdminGalleryItem = {
 
 async function main() {
   const res = await fetch(
-    `${ADMIN_API_URL}/api/landing/gallery?landingOnly=true`,
+    `${PUBLIC_ADMIN_API_URL}/api/landing/gallery?landingOnly=true`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },

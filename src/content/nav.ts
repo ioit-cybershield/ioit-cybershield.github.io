@@ -5,11 +5,11 @@ export type NavItem = {
   href?: string;
 };
 
-const ADMIN_API_URL = process.env.ADMIN_API_URL;
+const PUBLIC_ADMIN_API_URL = import.meta.env.PUBLIC_ADMIN_API_URL;
 
 async function fetchNavItems(): Promise<NavItem[]> {
   try {
-    const response = await fetch(`${ADMIN_API_URL}/api/general/navbar`, {
+    const response = await fetch(`${PUBLIC_ADMIN_API_URL}/api/general/navbar`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
